@@ -1,1 +1,729 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pierre Kossi DEGBOEVI — Terminal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg:       #080b08;
+      --bg2:      #0d110d;
+      --bg3:      #111811;
+      --border:   rgba(0,255,65,0.12);
+      --green:    #00ff41;
+      --green2:   #00c832;
+      --green3:   rgba(0,255,65,0.06);
+      --dim:      #3a4d3a;
+      --muted:    #6b8c6b;
+      --text:     #c8e6c8;
+      --white:    #e8f5e8;
+      --radius:   6px;
+      --font:     'JetBrains Mono', monospace;
+      --body:     'Inter', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--body); background: var(--bg); color: var(--text); line-height: 1.7; overflow-x: hidden; cursor: none; }
+
+    /* SCANLINES */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 9990; pointer-events: none;
+      background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px);
+    }
+
+    /* CUSTOM CURSOR */
+    .cursor-block {
+      position: fixed; z-index: 9999; pointer-events: none;
+      width: 10px; height: 18px;
+      background: var(--green);
+      animation: blink-cursor 1s step-end infinite;
+      box-shadow: 0 0 8px var(--green);
+    }
+    @keyframes blink-cursor { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    /* NOISE overlay */
+    .noise {
+      position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.9rem 5%;
+      background: rgba(8,11,8,0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: var(--font); font-size: 0.95rem; font-weight: 700;
+      color: var(--green); text-decoration: none; letter-spacing: 0.05em;
+    }
+    .nav-logo .prompt { color: var(--muted); margin-right: 0.3rem; }
+    .nav-links { display: flex; align-items: center; gap: 0.25rem; }
+    .nav-links a {
+      font-family: var(--font); font-size: 0.72rem; font-weight: 400;
+      text-decoration: none; color: var(--muted);
+      padding: 0.3rem 0.7rem;
+      border: 1px solid transparent;
+      border-radius: var(--radius);
+      transition: all 0.15s;
+      letter-spacing: 0.03em;
+    }
+    .nav-links a::before { content: './'; color: var(--dim); }
+    .nav-links a:hover { color: var(--green); border-color: var(--border); background: var(--green3); }
+    .lang-toggle {
+      display: flex; margin-left: 1.5rem;
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden;
+    }
+    .lang-toggle button {
+      padding: 0.3rem 0.7rem; background: transparent; border: none;
+      color: var(--muted); cursor: none; font-family: var(--font);
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em;
+      transition: background 0.15s, color 0.15s;
+    }
+    .lang-toggle button.active { background: var(--green); color: var(--bg); }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh; display: flex; flex-direction: column;
+      justify-content: center; padding: 8rem 5% 4rem;
+      position: relative; overflow: hidden;
+    }
+    .hero-matrix {
+      position: absolute; inset: 0; z-index: 0; overflow: hidden; opacity: 0.07;
+    }
+    .hero-matrix canvas { width: 100%; height: 100%; }
+    .hero-content { position: relative; z-index: 2; max-width: 900px; }
+
+    .term-window {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 8px; overflow: hidden; margin-bottom: 2.5rem;
+      animation: fadeUp 0.5s ease both;
+      box-shadow: 0 0 40px rgba(0,255,65,0.05);
+    }
+    .term-bar {
+      background: var(--bg3); padding: 0.6rem 1rem;
+      display: flex; align-items: center; gap: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .term-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .term-dot.r { background: #ff5f56; } .term-dot.y { background: #ffbd2e; } .term-dot.g { background: #27c93f; }
+    .term-title { font-family: var(--font); font-size: 0.72rem; color: var(--muted); margin-left: auto; margin-right: auto; }
+    .term-body { padding: 1.25rem 1.5rem; font-family: var(--font); font-size: 0.88rem; line-height: 2; }
+    .term-line { display: flex; align-items: baseline; gap: 0.5rem; }
+    .prompt-sym { color: var(--green); }
+    .cmd { color: var(--white); }
+    .out { color: var(--muted); padding-left: 1.5rem; }
+    .out .val { color: var(--green); }
+    .out .str { color: #7ec8a0; }
+
+    h1 {
+      font-family: var(--font); font-size: clamp(2.2rem, 5.5vw, 4.2rem);
+      font-weight: 800; line-height: 1.1; letter-spacing: -0.02em;
+      color: var(--white);
+      animation: fadeUp 0.5s 0.1s ease both;
+    }
+    h1 .green { color: var(--green); text-shadow: 0 0 20px rgba(0,255,65,0.4); }
+    h1 .cursor-inline {
+      display: inline-block; width: 0.55em; height: 1em;
+      background: var(--green); margin-left: 4px;
+      vertical-align: middle; animation: blink-cursor 1s step-end infinite;
+    }
+
+    .hero-sub {
+      font-family: var(--font); font-size: clamp(0.82rem, 1.5vw, 0.95rem);
+      color: var(--muted); margin-top: 1.5rem; max-width: 600px;
+      animation: fadeUp 0.5s 0.2s ease both;
+    }
+    .hero-sub .comment { color: var(--dim); }
+    .hero-sub .value   { color: var(--green2); }
+
+    .hero-cta { display: flex; gap: 1rem; margin-top: 2.5rem; flex-wrap: wrap; animation: fadeUp 0.5s 0.3s ease both; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.75rem 1.5rem; border-radius: var(--radius);
+      font-family: var(--font); font-size: 0.82rem; font-weight: 700;
+      cursor: none; text-decoration: none; transition: all 0.2s; border: none;
+      letter-spacing: 0.05em;
+    }
+    .btn-primary { background: var(--green); color: var(--bg); box-shadow: 0 0 20px rgba(0,255,65,0.25); }
+    .btn-primary:hover { background: #00e838; box-shadow: 0 0 30px rgba(0,255,65,0.4); transform: translateY(-2px); }
+    .btn-outline { background: transparent; color: var(--green); border: 1px solid var(--border); }
+    .btn-outline:hover { border-color: var(--green); background: var(--green3); transform: translateY(-2px); }
+
+    .hero-scroll { position: absolute; bottom: 2.5rem; left: 5%; display: flex; align-items: center; gap: 0.75rem; font-family: var(--font); font-size: 0.72rem; letter-spacing: 0.1em; color: var(--dim); z-index: 2; animation: fadeUp 0.5s 0.5s ease both; }
+    .scroll-line { width: 40px; height: 1px; background: linear-gradient(90deg, var(--green), transparent); }
+
+    @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+    /* SECTIONS */
+    section { padding: 6rem 5%; }
+    .section-header { margin-bottom: 3.5rem; }
+    .section-tag {
+      font-family: var(--font); font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase; color: var(--green);
+      margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;
+    }
+    .section-tag::before { content: '//'; color: var(--dim); }
+    h2 {
+      font-family: var(--font); font-size: clamp(1.5rem, 3.5vw, 2.3rem);
+      font-weight: 800; letter-spacing: -0.01em; line-height: 1.2; color: var(--white);
+    }
+    h2 em { font-style: normal; color: var(--green); }
+    .divider { width: 60px; height: 1px; background: linear-gradient(90deg, var(--green), transparent); margin-top: 1.25rem; }
+
+    /* ABOUT */
+    #about { background: var(--bg2); }
+    #about .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .about-text p { color: var(--muted); margin-bottom: 1.25rem; font-size: 0.95rem; line-height: 1.9; }
+    .about-text p strong { color: var(--text); font-weight: 600; }
+    .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem; }
+    .stat-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; transition: border-color 0.2s, transform 0.2s; }
+    .stat-card:hover { border-color: rgba(0,255,65,0.3); transform: translateY(-3px); box-shadow: 0 0 20px rgba(0,255,65,0.05); }
+    .stat-number { font-family: var(--font); font-size: 1.8rem; font-weight: 800; color: var(--green); line-height: 1; margin-bottom: 0.3rem; text-shadow: 0 0 15px rgba(0,255,65,0.3); }
+    .stat-label { font-family: var(--font); font-size: 0.72rem; color: var(--muted); letter-spacing: 0.05em; }
+
+    .about-visual { display: flex; align-items: center; justify-content: center; }
+    .term-card {
+      width: 100%; max-width: 380px;
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; overflow: hidden;
+      box-shadow: 0 0 60px rgba(0,255,65,0.06);
+    }
+    .term-card .term-bar { border-bottom: 1px solid var(--border); }
+    .term-card-body { padding: 1.5rem; font-family: var(--font); font-size: 0.82rem; line-height: 2; }
+    .tc-line { display: flex; gap: 0.75rem; }
+    .tc-key { color: var(--dim); min-width: 110px; }
+    .tc-val { color: var(--green); }
+    .tc-val.str { color: #7ec8a0; }
+    .tc-val.num { color: #88ccff; }
+    .tc-brace { color: var(--muted); }
+    .tc-indent { padding-left: 1.5rem; }
+
+    /* EDU */
+    #education { }
+    .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+    .edu-card {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.5rem;
+      transition: border-color 0.2s, transform 0.2s;
+      font-family: var(--font);
+    }
+    .edu-card:hover { border-color: rgba(0,255,65,0.3); transform: translateY(-3px); }
+    .edu-card-tag { font-size: 0.65rem; color: var(--dim); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.5rem; }
+    .edu-school { font-size: 0.95rem; font-weight: 700; color: var(--white); margin-bottom: 0.3rem; }
+    .edu-degree { font-size: 0.8rem; color: var(--green2); margin-bottom: 0.25rem; }
+    .edu-year { font-size: 0.72rem; color: var(--muted); }
+
+    /* EXPERIENCE */
+    #experience { background: var(--bg2); }
+    .exp-timeline { position: relative; padding-left: 2rem; }
+    .exp-timeline::before { content: ''; position: absolute; left: 0; top: 0.5rem; bottom: 0; width: 1px; background: linear-gradient(to bottom, var(--green), transparent); }
+    .exp-item { position: relative; margin-bottom: 2.5rem; }
+    .exp-item::before { content: '>'; position: absolute; left: -2.1rem; top: 0.15rem; color: var(--green); font-family: var(--font); font-size: 0.85rem; font-weight: 700; }
+    .exp-company { font-family: var(--font); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green2); margin-bottom: 0.3rem; }
+    .exp-role { font-family: var(--font); font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: 0.2rem; }
+    .exp-meta { font-family: var(--font); font-size: 0.72rem; color: var(--dim); margin-bottom: 0.75rem; }
+    .exp-meta span { color: var(--muted); }
+    .exp-desc { font-size: 0.9rem; color: var(--muted); line-height: 1.8; }
+    .exp-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.75rem; }
+    .tag {
+      padding: 0.2rem 0.65rem; background: var(--bg3);
+      border: 1px solid var(--border); border-radius: 4px;
+      font-family: var(--font); font-size: 0.7rem; color: var(--muted);
+      transition: all 0.15s; letter-spacing: 0.03em;
+    }
+    .tag:hover { border-color: rgba(0,255,65,0.4); color: var(--green); }
+
+    /* SKILLS */
+    #skills { }
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem; }
+    .skill-category {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.5rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .skill-category:hover { border-color: rgba(0,255,65,0.3); transform: translateY(-3px); box-shadow: 0 0 20px rgba(0,255,65,0.04); }
+    .skill-cat-header { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1.25rem; }
+    .skill-icon { font-size: 1rem; }
+    .skill-category h3 { font-family: var(--font); font-size: 0.82rem; font-weight: 700; color: var(--green); letter-spacing: 0.05em; }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+    /* PROJECTS */
+    #projects { background: var(--bg2); }
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.25rem; }
+    .project-card {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .project-card:hover { border-color: rgba(0,255,65,0.35); transform: translateY(-4px); box-shadow: 0 0 30px rgba(0,255,65,0.06); }
+    .project-header { padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+    .project-icon { font-size: 1.4rem; }
+    .project-status { font-family: var(--font); font-size: 0.65rem; color: var(--green); background: rgba(0,255,65,0.08); border: 1px solid rgba(0,255,65,0.2); border-radius: 4px; padding: 0.2rem 0.5rem; letter-spacing: 0.08em; }
+    .project-body { padding: 1.5rem; }
+    .project-type { font-family: var(--font); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green2); margin-bottom: 0.4rem; }
+    .project-title { font-family: var(--font); font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: 0.6rem; }
+    .project-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.7; margin-bottom: 1rem; }
+    .project-stack { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .project-stack .tag { font-size: 0.68rem; padding: 0.15rem 0.55rem; }
+    .project-links { display: flex; gap: 1rem; margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+    .project-links a { font-family: var(--font); font-size: 0.75rem; color: var(--muted); text-decoration: none; transition: color 0.15s; }
+    .project-links a:hover { color: var(--green); }
+
+    /* CONTACT */
+    #contact { }
+    .contact-inner { max-width: 680px; margin: 0 auto; }
+    .contact-inner .section-header { text-align: center; }
+    .contact-inner .divider { margin: 1.25rem auto 0; }
+    .contact-desc { color: var(--muted); margin-bottom: 2.5rem; font-size: 0.92rem; text-align: center; }
+    .contact-form { }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 0; }
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1rem; }
+    label { font-family: var(--font); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim); }
+    label::before { content: '$ '; color: var(--green); }
+    input, textarea {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 0.8rem 1rem;
+      color: var(--green); font-family: var(--font);
+      font-size: 0.85rem; outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s; width: 100%;
+    }
+    input:focus, textarea:focus { border-color: rgba(0,255,65,0.4); box-shadow: 0 0 15px rgba(0,255,65,0.07); }
+    input::placeholder, textarea::placeholder { color: var(--dim); }
+    textarea { min-height: 130px; resize: vertical; }
+    .form-submit { text-align: center; margin-top: 1.25rem; }
+    .contact-links { display: flex; justify-content: center; gap: 1rem; margin-top: 2.5rem; flex-wrap: wrap; }
+    .contact-link {
+      display: flex; align-items: center; gap: 0.5rem;
+      padding: 0.65rem 1.25rem; background: var(--bg2);
+      border: 1px solid var(--border); border-radius: var(--radius);
+      color: var(--muted); text-decoration: none;
+      font-family: var(--font); font-size: 0.78rem; font-weight: 500;
+      transition: all 0.15s;
+    }
+    .contact-link:hover { border-color: rgba(0,255,65,0.35); color: var(--green); background: var(--green3); }
+
+    footer { padding: 2rem 5%; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    footer p { font-family: var(--font); font-size: 0.72rem; color: var(--dim); }
+    .footer-green { color: var(--green); }
+
+    /* REVEAL */
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 768px) {
+      #about .about-grid { grid-template-columns: 1fr; }
+      .edu-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+<div class="noise"></div>
+<div class="cursor-block" id="cur"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo"><span class="prompt">~$</span> pkd</a>
+  <div class="nav-links">
+    <a href="#about"      data-i18n="nav.about">about</a>
+    <a href="#experience" data-i18n="nav.exp">experience</a>
+    <a href="#skills"     data-i18n="nav.skills">skills</a>
+    <a href="#projects"   data-i18n="nav.projects">projects</a>
+    <a href="#contact"    data-i18n="nav.contact">contact</a>
+  </div>
+  <div class="lang-toggle">
+    <button id="btn-fr" class="active" onclick="setLang('fr')">FR</button>
+    <button id="btn-en" onclick="setLang('en')">EN</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-matrix"><canvas id="matrix"></canvas></div>
+  <div class="hero-content">
+    <div class="term-window">
+      <div class="term-bar">
+        <div class="term-dot r"></div><div class="term-dot y"></div><div class="term-dot g"></div>
+        <span class="term-title">bash — pierre@pkd ~</span>
+      </div>
+      <div class="term-body">
+        <div class="term-line"><span class="prompt-sym">~$</span><span class="cmd" data-i18n="hero.cmd1">whoami</span></div>
+        <div class="term-line out"><span class="val">pierre-kossi-degboevi</span></div>
+        <div class="term-line" style="margin-top:0.5rem"><span class="prompt-sym">~$</span><span class="cmd" data-i18n="hero.cmd2">cat profile.json</span></div>
+        <div class="term-line out">{ <span class="str">"role"</span>: <span class="val" data-i18n="hero.role">"Ingénieur Informatique"</span>,</div>
+        <div class="term-line out">&nbsp;&nbsp;<span class="str">"location"</span>: <span class="val">"Kara, Togo 🌍"</span>,</div>
+        <div class="term-line out">&nbsp;&nbsp;<span class="str">"status"</span>: <span class="val" data-i18n="hero.status">"available_for_hire ✅"</span> }</div>
+      </div>
+    </div>
+
+    <h1>
+      <span data-i18n="hero.h1a">Pierre Kossi</span><br>
+      <span class="green">DEGBOEVI</span><span class="cursor-inline"></span>
+    </h1>
+    <p class="hero-sub" style="margin-top:1.5rem">
+      <span class="comment">// </span><span data-i18n="hero.sub">Ingénieur des Travaux Informatiques · Développeur .NET/Java · MBA IT Project Management</span>
+    </p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn btn-primary" data-i18n="hero.cta1">$ run projects</a>
+      <a href="#contact"  class="btn btn-outline"  data-i18n="hero.cta2">$ contact --me</a>
+    </div>
+  </div>
+  <div class="hero-scroll"><span class="scroll-line"></span><span data-i18n="hero.scroll">scroll_down</span></div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid reveal">
+    <div class="about-text">
+      <div class="section-header">
+        <span class="section-tag" data-i18n="about.tag">about_me</span>
+        <h2 data-i18n="about.title">Ingénieur, dev &<br><em>gestionnaire IT</em></h2>
+        <div class="divider"></div>
+      </div>
+      <p data-i18n="about.p1"><strong>Ingénieur des Travaux Informatiques</strong> diplômé de l'IAI Togo, MBA spécialisé en IT Project Management (Collège de Paris). Je conçois et développe des applications robustes, tout en gérant des projets IT de bout en bout.</p>
+      <p data-i18n="about.p2">Point Focal IT &amp; Technicien support à l'<strong>OTR</strong>, je combine expertise technique et gestion fiscale. Développeur freelance pour des clients en France et en Afrique.</p>
+      <div class="about-stats">
+        <div class="stat-card"><div class="stat-number">5+</div><div class="stat-label" data-i18n="about.s1">// years_exp</div></div>
+        <div class="stat-card"><div class="stat-number">5</div><div class="stat-label" data-i18n="about.s2">// companies</div></div>
+        <div class="stat-card"><div class="stat-number">MBA</div><div class="stat-label" data-i18n="about.s3">// it_project_mgmt</div></div>
+        <div class="stat-card"><div class="stat-number">🌍</div><div class="stat-label" data-i18n="about.s4">// togo_remote</div></div>
+      </div>
+    </div>
+    <div class="about-visual">
+      <div class="term-card">
+        <div class="term-bar">
+          <div class="term-dot r"></div><div class="term-dot y"></div><div class="term-dot g"></div>
+          <span class="term-title">pkd.config.json</span>
+        </div>
+        <div class="term-card-body">
+          <div class="tc-line tc-brace">{</div>
+          <div class="tc-line tc-indent"><span class="tc-key">"name":</span> <span class="tc-val str">"Pierre Kossi DEGBOEVI"</span>,</div>
+          <div class="tc-line tc-indent"><span class="tc-key">"title":</span> <span class="tc-val str" data-i18n="tc.title">"Ingénieur Informatique"</span>,</div>
+          <div class="tc-line tc-indent"><span class="tc-key">"location":</span> <span class="tc-val str">"Kara, Togo"</span>,</div>
+          <div class="tc-line tc-indent"><span class="tc-key">"experience":</span> <span class="tc-val num">5</span>,</div>
+          <div class="tc-line tc-indent"><span class="tc-key">"email":</span> <span class="tc-val str">"pierredeg..."</span>,</div>
+          <div class="tc-line tc-indent"><span class="tc-key">"remote":</span> <span class="tc-val">true</span>,</div>
+          <div class="tc-line tc-indent"><span class="tc-key">"stack":</span> <span class="tc-brace">[</span></div>
+          <div class="tc-line" style="padding-left:3rem"><span class="tc-val str">".NET"</span>, <span class="tc-val str">"Java"</span>,</div>
+          <div class="tc-line" style="padding-left:3rem"><span class="tc-val str">"Blazor"</span>, <span class="tc-val str">"SQL"</span></div>
+          <div class="tc-line tc-indent"><span class="tc-brace">]</span>,</div>
+          <div class="tc-line tc-indent"><span class="tc-key">"available":</span> <span class="tc-val" style="color:#00ff41">true</span></div>
+          <div class="tc-line tc-brace">}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-header reveal">
+    <span class="section-tag" data-i18n="edu.tag">education</span>
+    <h2 data-i18n="edu.title">Parcours <em>académique</em></h2>
+    <div class="divider"></div>
+  </div>
+  <div class="edu-grid">
+    <div class="edu-card reveal">
+      <div class="edu-card-tag">// 2022 – 2023</div>
+      <div class="edu-school">🎓 Collège de Paris</div>
+      <div class="edu-degree" data-i18n="edu.d1">MBA spécialisé — IT Project Management</div>
+      <div class="edu-year">Paris, France</div>
+    </div>
+    <div class="edu-card reveal">
+      <div class="edu-card-tag">// 2016 – 2019</div>
+      <div class="edu-school">🎓 IAI TOGO</div>
+      <div class="edu-degree" data-i18n="edu.d2">Diplôme d'Ingénieur — Informatique</div>
+      <div class="edu-year">Lomé, Togo</div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-header reveal">
+    <span class="section-tag" data-i18n="exp.tag">experience</span>
+    <h2 data-i18n="exp.title">Parcours <em>professionnel</em></h2>
+    <div class="divider"></div>
+  </div>
+  <div class="exp-timeline">
+    <div class="exp-item reveal">
+      <div class="exp-company">IMMOBTRADER · Freelance · France (Remote)</div>
+      <div class="exp-role" data-i18n="e1.role">Développeur Web</div>
+      <div class="exp-meta">// janv. 2024 – <span data-i18n="now">aujourd'hui</span> · 2 ans 3 mois</div>
+      <div class="exp-desc" data-i18n="e1.desc">Développement d'applications web pour une plateforme immobilière internationale. Conception et maintenance front-end et back-end.</div>
+      <div class="exp-tags"><span class="tag">.NET</span><span class="tag">C#</span><span class="tag">Conception web</span><span class="tag">SQL</span></div>
+    </div>
+    <div class="exp-item reveal">
+      <div class="exp-company">OTR — Office Togolais des Recettes · Kara, Togo</div>
+      <div class="exp-role" data-i18n="e2.role">Point Focal IT | Déclaration fiscale</div>
+      <div class="exp-meta">// févr. 2025 – <span data-i18n="now">aujourd'hui</span></div>
+      <div class="exp-desc" data-i18n="e2.desc">Coordination IT et gestion de déclaration fiscale. Interlocuteur technique principal entre équipes métier et direction informatique.</div>
+      <div class="exp-tags"><span class="tag">Excel</span><span class="tag">MudBlazor</span><span class="tag">Gestion IT</span></div>
+    </div>
+    <div class="exp-item reveal">
+      <div class="exp-company">OTR — Office Togolais des Recettes · Kara, Togo</div>
+      <div class="exp-role" data-i18n="e3.role">Technicien de support informatique</div>
+      <div class="exp-meta">// janv. 2025 – <span data-i18n="now">aujourd'hui</span></div>
+      <div class="exp-desc" data-i18n="e3.desc">Support technique utilisateurs, câblage réseau, maintenance préventive et curative du parc informatique.</div>
+      <div class="exp-tags"><span class="tag">Câblage</span><span class="tag">Maintenance</span><span class="tag">Support</span></div>
+    </div>
+    <div class="exp-item reveal">
+      <div class="exp-company">OTR — Office Togolais des Recettes · Lomé, Togo</div>
+      <div class="exp-role" data-i18n="e4.role">Professionnel technique au contrôle fiscal</div>
+      <div class="exp-meta">// févr. 2021 – <span data-i18n="now">aujourd'hui</span> · 5 ans 2 mois</div>
+      <div class="exp-desc" data-i18n="e4.desc">Assistant chargé de recoupement fiscal. Contrôle de données fiscales, assistance administrative de direction.</div>
+      <div class="exp-tags"><span class="tag">VBA</span><span class="tag">Excel</span><span class="tag">Contrôle fiscal</span></div>
+    </div>
+    <div class="exp-item reveal">
+      <div class="exp-company">Cergi SA · Lomé, Togo</div>
+      <div class="exp-role" data-i18n="e5.role">Développeur Junior .NET / Applications</div>
+      <div class="exp-meta">// nov. 2019 – févr. 2021 · 1 an 4 mois</div>
+      <div class="exp-desc" data-i18n="e5.desc">Développement d'applications métier avec .NET et Blazor. Participation à des projets d'envergure en équipe.</div>
+      <div class="exp-tags"><span class="tag">.NET</span><span class="tag">Blazor</span><span class="tag">SQL</span><span class="tag">C#</span></div>
+    </div>
+    <div class="exp-item reveal">
+      <div class="exp-company">DSA MBANK · Stage · Lomé, Togo</div>
+      <div class="exp-role" data-i18n="e6.role">Développeur Web Java</div>
+      <div class="exp-meta">// juin 2019 – août 2019 · 3 mois</div>
+      <div class="exp-desc" data-i18n="e6.desc">Mise en place d'une plateforme de gestion et de numérisation de documents pour le secteur bancaire.</div>
+      <div class="exp-tags"><span class="tag">Java</span><span class="tag">Web</span><span class="tag">GED</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-header reveal">
+    <span class="section-tag" data-i18n="sk.tag">skills</span>
+    <h2 data-i18n="sk.title">Stack <em>technique</em></h2>
+    <div class="divider"></div>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-category reveal">
+      <div class="skill-cat-header"><span class="skill-icon">🖥️</span><h3 data-i18n="sk.c1">// dev</h3></div>
+      <div class="skill-tags">
+        <span class="tag">.NET / C#</span><span class="tag">Blazor</span><span class="tag">MudBlazor</span>
+        <span class="tag">Java</span><span class="tag">HTML/CSS</span><span class="tag">JavaScript</span>
+      </div>
+    </div>
+    <div class="skill-category reveal">
+      <div class="skill-cat-header"><span class="skill-icon">🗄️</span><h3 data-i18n="sk.c2">// database</h3></div>
+      <div class="skill-tags">
+        <span class="tag">SQL Server</span><span class="tag">MySQL</span><span class="tag">PostgreSQL</span>
+      </div>
+    </div>
+    <div class="skill-category reveal">
+      <div class="skill-cat-header"><span class="skill-icon">📊</span><h3 data-i18n="sk.c3">// tools</h3></div>
+      <div class="skill-tags">
+        <span class="tag">VBA / Excel</span><span class="tag">Microsoft 365</span><span class="tag">Git</span><span class="tag">Conception web</span>
+      </div>
+    </div>
+    <div class="skill-category reveal">
+      <div class="skill-cat-header"><span class="skill-icon">🔧</span><h3 data-i18n="sk.c4">// it_mgmt</h3></div>
+      <div class="skill-tags">
+        <span class="tag">Support IT</span><span class="tag">Câblage réseau</span><span class="tag">Gestion de projet</span><span class="tag">Gestion de crise</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-header reveal">
+    <span class="section-tag" data-i18n="pr.tag">projects</span>
+    <h2 data-i18n="pr.title">Réalisations <em>notables</em></h2>
+    <div class="divider"></div>
+  </div>
+  <div class="projects-grid">
+    <div class="project-card reveal">
+      <div class="project-header">
+        <span class="project-icon">🚌</span>
+        <span class="project-status" data-i18n="pr.active">ACTIVE</span>
+      </div>
+      <div class="project-body">
+        <div class="project-type" data-i18n="pr.p1.type">transport / e-commerce</div>
+        <div class="project-title" data-i18n="pr.p1.title">Vente en ligne de tickets de bus</div>
+        <p class="project-desc" data-i18n="pr.p1.desc">Plateforme de réservation de tickets de transport. Projet STORMEYES — digitalisation du transport en Afrique.</p>
+        <div class="project-stack"><span class="tag">.NET</span><span class="tag">C#</span><span class="tag">SQL</span><span class="tag">Web</span></div>
+        <div class="project-links"><a href="#" data-i18n="pr.view">$ run --demo</a></div>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-header">
+        <span class="project-icon">🎓</span>
+        <span class="project-status" data-i18n="pr.active">ACTIVE</span>
+      </div>
+      <div class="project-body">
+        <div class="project-type" data-i18n="pr.p2.type">education / platform</div>
+        <div class="project-title">Ma Fianu</div>
+        <p class="project-desc" data-i18n="pr.p2.desc">Mise en relation apprenants et encadreurs/mentors selon les domaines de compétences.</p>
+        <div class="project-stack"><span class="tag">Java</span><span class="tag">Web App</span><span class="tag">SQL</span></div>
+        <div class="project-links"><a href="#" data-i18n="pr.view">$ run --demo</a></div>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-header">
+        <span class="project-icon">🏦</span>
+        <span class="project-status" style="color:var(--muted);border-color:var(--border);background:transparent" data-i18n="pr.done">DONE</span>
+      </div>
+      <div class="project-body">
+        <div class="project-type" data-i18n="pr.p3.type">banking / ged</div>
+        <div class="project-title" data-i18n="pr.p3.title">Plateforme GED — DSA MBANK</div>
+        <p class="project-desc" data-i18n="pr.p3.desc">Gestion électronique de documents et numérisation pour le secteur bancaire.</p>
+        <div class="project-stack"><span class="tag">Java</span><span class="tag">GED</span><span class="tag">Numérisation</span></div>
+        <div class="project-links"><a href="#" data-i18n="pr.more">$ cat README.md</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="section-header reveal">
+      <span class="section-tag" data-i18n="ct.tag">contact</span>
+      <h2 data-i18n="ct.title">Travaillons<br><em>ensemble</em></h2>
+      <div class="divider"></div>
+    </div>
+    <p class="contact-desc reveal" data-i18n="ct.desc">// Un projet ? Une opportunité ? Je réponds sous 24h.</p>
+    <div class="contact-form reveal">
+      <div class="form-row">
+        <div class="form-group"><label data-i18n="ct.name">name</label><input type="text" id="f-name"/></div>
+        <div class="form-group"><label data-i18n="ct.email">email</label><input type="email" placeholder="hello@email.com"/></div>
+      </div>
+      <div class="form-group"><label data-i18n="ct.subject">subject</label><input type="text" id="f-subj"/></div>
+      <div class="form-group"><label data-i18n="ct.message">message</label><textarea id="f-msg"></textarea></div>
+      <div class="form-submit"><button class="btn btn-primary" data-i18n="ct.send">$ send --message</button></div>
+    </div>
+    <div class="contact-links reveal">
+      <a href="mailto:pierredegboevi@gmail.com" class="contact-link">✉ pierredegboevi@gmail.com</a>
+      <a href="https://www.linkedin.com/in/pierre-kossi-degboevi" target="_blank" class="contact-link">in LinkedIn</a>
+      <a href="#" class="contact-link">📍 Kara, Togo</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>// © 2025 <span class="footer-green">Pierre Kossi DEGBOEVI</span></p>
+  <p data-i18n="ft.made">// made_with ♥ from_togo</p>
+</footer>
+
+<script>
+/* ── MATRIX RAIN ── */
+(function(){
+  const c = document.getElementById('matrix');
+  const ctx = c.getContext('2d');
+  function resize(){ c.width = c.parentElement.offsetWidth; c.height = c.parentElement.offsetHeight; }
+  resize(); window.addEventListener('resize', resize);
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&<>/\\|{}[]アイウエオカキクケコ';
+  const fs = 13, cols = () => Math.floor(c.width / fs);
+  let drops = Array.from({length: cols()}, () => Math.random() * -100);
+  setInterval(() => {
+    ctx.fillStyle = 'rgba(8,11,8,0.05)';
+    ctx.fillRect(0,0,c.width,c.height);
+    ctx.fillStyle = '#00ff41';
+    ctx.font = fs + 'px JetBrains Mono, monospace';
+    const n = cols();
+    if(drops.length !== n) drops = Array.from({length:n},()=>Math.random()*-100);
+    drops.forEach((y,i) => {
+      const ch = chars[Math.floor(Math.random()*chars.length)];
+      ctx.globalAlpha = Math.random() * 0.5 + 0.1;
+      ctx.fillText(ch, i*fs, y*fs);
+      ctx.globalAlpha = 1;
+      if(y*fs > c.height && Math.random() > 0.975) drops[i] = 0;
+      drops[i] += 0.5;
+    });
+  }, 50);
+})();
+
+/* ── CURSOR ── */
+const cur = document.getElementById('cur');
+document.addEventListener('mousemove', e => { cur.style.left = (e.clientX+2)+'px'; cur.style.top = (e.clientY-2)+'px'; });
+
+/* ── I18N ── */
+const T = {
+  fr: {
+    "nav.about":"about","nav.exp":"experience","nav.skills":"skills","nav.projects":"projects","nav.contact":"contact",
+    "hero.cmd1":"whoami","hero.cmd2":"cat profile.json","hero.role":'"Ingénieur Informatique"',"hero.status":'"available_for_hire ✅"',
+    "hero.h1a":"Pierre Kossi","hero.sub":"Ingénieur des Travaux Informatiques · Développeur .NET/Java · MBA IT Project Management","hero.cta1":"$ run projects","hero.cta2":"$ contact --me","hero.scroll":"scroll_down",
+    "about.tag":"about_me","about.title":"Ingénieur, dev &<br><em>gestionnaire IT</em>","about.p1":"<strong>Ingénieur des Travaux Informatiques</strong> diplômé de l'IAI Togo, MBA spécialisé en IT Project Management (Collège de Paris). Je conçois des applications robustes et gère des projets IT de bout en bout.","about.p2":"Point Focal IT & Technicien support à l'<strong>OTR</strong>. Je combine expertise technique et gestion fiscale. Développeur freelance pour des clients en France et en Afrique.","about.s1":"// years_exp","about.s2":"// companies","about.s3":"// it_project_mgmt","about.s4":"// togo_remote",
+    "tc.title":'"Ingénieur Informatique"',
+    "edu.tag":"education","edu.title":"Parcours <em>académique</em>","edu.d1":"MBA spécialisé — IT Project Management","edu.d2":"Diplôme d'Ingénieur — Informatique",
+    "exp.tag":"experience","exp.title":"Parcours <em>professionnel</em>","now":"aujourd'hui",
+    "e1.role":"Développeur Web","e1.desc":"Développement d'applications web pour une plateforme immobilière internationale. Conception et maintenance front-end et back-end.",
+    "e2.role":"Point Focal IT | Déclaration fiscale","e2.desc":"Coordination IT et gestion de déclaration fiscale. Interlocuteur technique entre équipes métier et direction informatique.",
+    "e3.role":"Technicien de support informatique","e3.desc":"Support technique utilisateurs, câblage réseau, maintenance préventive et curative.",
+    "e4.role":"Professionnel technique au contrôle fiscal","e4.desc":"Assistant chargé de recoupement fiscal. Contrôle de données fiscales, assistance administrative.",
+    "e5.role":"Développeur Junior .NET / Applications","e5.desc":"Développement d'applications métier avec .NET et Blazor. Participation à des projets d'envergure.",
+    "e6.role":"Développeur Web Java","e6.desc":"Mise en place d'une plateforme GED et numérisation de documents pour le secteur bancaire.",
+    "sk.tag":"skills","sk.title":"Stack <em>technique</em>","sk.c1":"// dev","sk.c2":"// database","sk.c3":"// tools","sk.c4":"// it_mgmt",
+    "pr.tag":"projects","pr.title":"Réalisations <em>notables</em>","pr.active":"ACTIVE","pr.done":"DONE",
+    "pr.p1.type":"transport / e-commerce","pr.p1.title":"Vente en ligne de tickets de bus","pr.p1.desc":"Plateforme de réservation de tickets de transport. Projet STORMEYES — digitalisation du transport en Afrique.",
+    "pr.p2.type":"education / platform","pr.p2.desc":"Mise en relation apprenants et encadreurs/mentors selon les domaines de compétences.",
+    "pr.p3.type":"banking / ged","pr.p3.title":"Plateforme GED — DSA MBANK","pr.p3.desc":"Gestion électronique de documents et numérisation pour le secteur bancaire.",
+    "pr.view":"$ run --demo","pr.more":"$ cat README.md",
+    "ct.tag":"contact","ct.title":"Travaillons<br><em>ensemble</em>","ct.desc":"// Un projet ? Une opportunité ? Je réponds sous 24h.","ct.name":"name","ct.email":"email","ct.subject":"subject","ct.message":"message","ct.send":"$ send --message",
+    "ft.made":"// made_with ♥ from_togo"
+  },
+  en: {
+    "nav.about":"about","nav.exp":"experience","nav.skills":"skills","nav.projects":"projects","nav.contact":"contact",
+    "hero.cmd1":"whoami","hero.cmd2":"cat profile.json","hero.role":'"IT Engineer"',"hero.status":'"available_for_hire ✅"',
+    "hero.h1a":"Pierre Kossi","hero.sub":"IT Engineer · .NET/Java Developer · MBA IT Project Management","hero.cta1":"$ run projects","hero.cta2":"$ contact --me","hero.scroll":"scroll_down",
+    "about.tag":"about_me","about.title":"Engineer, dev &<br><em>IT manager</em>","about.p1":"<strong>Computer Science Engineer</strong> from IAI Togo, MBA in IT Project Management (Collège de Paris). I design robust applications and manage IT projects end-to-end.","about.p2":"IT Focal Point & Support Technician at <strong>OTR</strong>. I combine technical expertise with fiscal management. Freelance developer for clients in France and Africa.","about.s1":"// years_exp","about.s2":"// companies","about.s3":"// it_project_mgmt","about.s4":"// togo_remote",
+    "tc.title":'"IT Engineer"',
+    "edu.tag":"education","edu.title":"Academic <em>background</em>","edu.d1":"Specialized MBA — IT Project Management","edu.d2":"Engineering Degree — Computer Science",
+    "exp.tag":"experience","exp.title":"Professional <em>journey</em>","now":"present",
+    "e1.role":"Web Developer","e1.desc":"Web application development for an international real estate platform. Front-end and back-end design and maintenance.",
+    "e2.role":"IT Focal Point | Tax Declaration","e2.desc":"IT coordination and tax declaration management. Technical liaison between business teams and IT management.",
+    "e3.role":"IT Support Technician","e3.desc":"User support, network cabling, preventive and corrective maintenance of IT infrastructure.",
+    "e4.role":"Technical Professional in Tax Audit","e4.desc":"Tax cross-checking assistant. Tax data control and verification, administrative support.",
+    "e5.role":"Junior .NET / Application Developer","e5.desc":"Business application development with .NET and Blazor. Large-scale team projects.",
+    "e6.role":"Java Web Developer","e6.desc":"Electronic document management and digitization platform for the banking sector.",
+    "sk.tag":"skills","sk.title":"Technical <em>stack</em>","sk.c1":"// dev","sk.c2":"// database","sk.c3":"// tools","sk.c4":"// it_mgmt",
+    "pr.tag":"projects","pr.title":"Notable <em>work</em>","pr.active":"ACTIVE","pr.done":"DONE",
+    "pr.p1.type":"transport / e-commerce","pr.p1.title":"Online Bus Ticket Sales","pr.p1.desc":"Online transport ticket booking platform. STORMEYES project — digitalizing transport in Africa.",
+    "pr.p2.type":"education / platform","pr.p2.desc":"Connecting learners with mentors and tutors across skill domains.",
+    "pr.p3.type":"banking / dms","pr.p3.title":"DMS Platform — DSA MBANK","pr.p3.desc":"Electronic document management and digitization for the banking sector.",
+    "pr.view":"$ run --demo","pr.more":"$ cat README.md",
+    "ct.tag":"contact","ct.title":"Let's work<br><em>together</em>","ct.desc":"// A project? An opportunity? I reply within 24h.","ct.name":"name","ct.email":"email","ct.subject":"subject","ct.message":"message","ct.send":"$ send --message",
+    "ft.made":"// made_with ♥ from_togo"
+  }
+};
+
+function setLang(l) {
+  document.documentElement.lang = l;
+  document.getElementById('btn-fr').classList.toggle('active', l==='fr');
+  document.getElementById('btn-en').classList.toggle('active', l==='en');
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const k = el.getAttribute('data-i18n');
+    if(T[l][k] !== undefined) el.innerHTML = T[l][k];
+  });
+  const ph = {
+    'f-name':  l==='fr'?'Votre nom':'Your name',
+    'f-subj':  l==='fr'?'Objet du message':'Message subject',
+    'f-msg':   l==='fr'?'Décrivez votre projet...':'Describe your project...'
+  };
+  Object.entries(ph).forEach(([id,v])=>{ const el=document.getElementById(id); if(el) el.placeholder=v; });
+}
+
+/* ── SCROLL REVEAL ── */
+const obs = new IntersectionObserver(entries => {
+  entries.forEach((e,i) => { if(e.isIntersecting) setTimeout(()=>e.target.classList.add('visible'), i*80); });
+}, {threshold: 0.08});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+setLang('fr');
+</script>
+</body>
+</html>
 
