@@ -2,20 +2,21 @@
    VARIABLES & RESET
 ============================================================ */
 :root {
-  --bg:           #0d0d0d;
-  --bg-card:      #141414;
-  --bg-card2:     #1a1a1a;
+  --bg:           #0a0d14;
+  --bg-card:      #111520;
+  --bg-card2:     #181d2e;
   --border:       rgba(255, 255, 255, 0.08);
   --border-hover: rgba(212, 175, 55, 0.4);
-  --accent:       #d4af37;
+  --accent:       #c8a96e;
   --accent-light: rgba(212, 175, 55, 0.12);
   --accent-glow:  rgba(212, 175, 55, 0.25);
-  --text:         #e8e8e0;
-  --muted:        #777770;
+  --text:         #e8eaf2;
+  --muted:        #7a7f96;
   --radius:       12px;
-  --font-display: 'Playfair Display', serif;
+  --font-display: 'Epilogue', serif;
   --font-body:    'Inter', sans-serif;
 }
+
 
 *, *::before, *::after {
   box-sizing: border-box;
