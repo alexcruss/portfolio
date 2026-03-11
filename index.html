@@ -4,563 +4,432 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pierre Kossi DEGBOEVI — Ingénieur Informatique</title>
-  <meta name="description" content="Portfolio de Pierre Kossi DEGBOEVI, Ingénieur Informatique & Développeur .NET/Blazor basé au Togo, disponible à distance." />
-
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- Polices identiques à l'original : Syne + Epilogue -->
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Epilogue:wght@300;400;500;600&display=swap" rel="stylesheet" />
-    <!--<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
- -->
-  <!-- Stylesheet -->
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- ============================================================
-       NAV
-  ============================================================ -->
-  <nav>
-    <a class="nav-logo" href="#hero">PKD.</a>
+<!-- Curseur personnalisé — identique à l'original -->
+<div class="cursor"      id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
 
-    <ul class="nav-links">
-      <li><a href="#about"      data-i18n="nav_about">À propos</a></li>
-      <li><a href="#experience" data-i18n="nav_experience">Expérience</a></li>
-      <li><a href="#skills"     data-i18n="nav_skills">Compétences</a></li>
-      <li><a href="#projects"   data-i18n="nav_projects">Projets</a></li>
-      <li><a href="#contact"    data-i18n="nav_contact">Contact</a></li>
-    </ul>
+<!-- ============================================================
+     NAV
+============================================================ -->
+<nav>
+  <a href="#hero" class="nav-logo">PKD<span>.</span></a>
+  <div class="nav-links">
+    <a href="#about"      data-i18n="nav.about">À propos</a>
+    <a href="#experience" data-i18n="nav.exp">Expérience</a>
+    <a href="#skills"     data-i18n="nav.skills">Compétences</a>
+    <a href="#projects"   data-i18n="nav.projects">Projets</a>
+    <a href="#contact"    data-i18n="nav.contact">Contact</a>
+  </div>
+  <div class="lang-toggle">
+    <button id="btn-fr" class="active" onclick="setLang('fr')">FR</button>
+    <button id="btn-en"                onclick="setLang('en')">EN</button>
+  </div>
+</nav>
 
-    <!-- Language toggle -->
-    <div class="nav-lang-toggle" role="group" aria-label="Language selector">
-      <button class="lang-btn active" data-lang="fr">FR</button>
-      <button class="lang-btn"        data-lang="en">EN</button>
-    </div>
-  </nav>
+<!-- ============================================================
+     HERO
+============================================================ -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
 
-  <!-- ============================================================
-       HERO
-  ============================================================ -->
-  <section id="hero">
-    <div class="hero-inner">
-
-      <div class="hero-content">
-        <div class="hero-badge">
-          <span class="hero-badge-dot"></span>
-          <span data-i18n="hero_badge">Disponible pour de nouveaux projets</span>
-        </div>
-
-        <h1 class="hero-title" data-i18n="hero_title">
-          Pierre Kossi<br><em>DEGBOEVI</em>
-        </h1>
-
-        <p class="hero-sub" data-i18n="hero_sub">
-          Ingénieur Informatique &amp; Développeur d'Applications — Togo · Disponible à distance
-        </p>
-
-        <div class="hero-actions">
-          <a href="#projects" class="btn btn-primary" data-i18n="hero_btn1">Voir mes projets</a>
-          <a href="#contact"  class="btn btn-outline"  data-i18n="hero_btn2">Me contacter →</a>
-        </div>
-      </div>
-
-      <!-- PHOTO HERO
-           ✏️  Pour ajouter votre photo :
-           1. Placez votre image dans le même dossier (ex: photo.jpg)
-           2. Supprimez le bloc .photo-placeholder
-           3. Décommentez la balise <img> ci-dessous
-      -->
-      <div class="hero-photo-wrap">
-        <div class="hero-photo-ring">
-          <div class="hero-photo-inner">
-             <img src="PDK.jpeg" alt="Pierre Kossi DEGBOEVI" />
-            <div class="photo-placeholder">
-              <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
-                <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
-              </svg>
-              <span>Votre photo<br/>→ photo.jpg</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ============================================================
-       ABOUT
-  ============================================================ -->
-  <section id="about">
-    <div class="container">
-      <p class="section-label" data-i18n="about_label">À propos</p>
-      <h2 class="section-title" data-i18n="about_title">Ingénieur, développeur &amp; <em>gestionnaire IT</em></h2>
-
-      <div class="about-grid">
-
-        <!-- PHOTO À PROPOS
-             ✏️  Même procédure que la photo Hero ci-dessus.
-        -->
-        <div class="about-photo-wrap">
-          <div class="about-photo-frame">
-             <img src="PDK.jpeg" alt="Pierre Kossi DEGBOEVI" /> -->
-            <div class="photo-placeholder">
-              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
-                <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
-              </svg>
-              <span>photo.jpg</span>
-            </div>
-            <div class="about-photo-badge">💻</div>
-          </div>
-        </div>
-
-        <div class="about-text">
-          <p data-i18n="about_p1">
-            <strong>Ingénieur des Travaux Informatiques</strong> diplômé de l'IAI Togo avec un MBA spécialisé en IT Project Management du Collège de Paris. Je conçois et développe des applications robustes tout en gérant des projets IT de bout en bout.
-          </p>
-          <p data-i18n="about_p2">
-            Actuellement Point Focal IT &amp; Technicien de support à l'<strong>Office Togolais des Recettes (OTR)</strong>, je combine expertise technique et gestion fiscale. En parallèle, je développe en freelance pour des clients internationaux.
-          </p>
-
-          <div class="stats-row">
-            <div class="stat">
-              <div class="stat-val">5+</div>
-              <div class="stat-lbl" data-i18n="stat1_lbl">Ans d'expérience</div>
-            </div>
-            <div class="stat">
-              <div class="stat-val">5</div>
-              <div class="stat-lbl" data-i18n="stat2_lbl">Entreprises</div>
-            </div>
-            <div class="stat">
-              <div class="stat-val">MBA</div>
-              <div class="stat-lbl" data-i18n="stat3_lbl">IT Project Mgmt</div>
-            </div>
-            <div class="stat">
-              <div class="stat-val">🌍</div>
-              <div class="stat-lbl" data-i18n="stat4_lbl">Togo · Remote</div>
-            </div>
-          </div>
-        </div>
-
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-badge" data-i18n="hero.badge">Disponible pour de nouveaux projets</div>
+      <h1>
+        <span data-i18n="hero.line1">Pierre Kossi</span>
+        <span class="line2">DEGBOEVI</span>
+      </h1>
+      <p class="hero-sub" data-i18n="hero.sub">
+        Ingénieur Informatique &amp; Développeur d'Applications — Togo · Disponible à distance
+      </p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-primary" data-i18n="hero.cta1">Voir mes projets</a>
+        <a href="#contact"  class="btn btn-outline"  data-i18n="hero.cta2">Me contacter</a>
       </div>
     </div>
-  </section>
 
-  <!-- ============================================================
-       EDUCATION
-  ============================================================ -->
-  <section id="education">
-    <div class="container">
-      <p class="section-label" data-i18n="edu_label">Formation</p>
-      <h2 class="section-title" data-i18n="edu_title">Parcours <em>académique</em></h2>
-
-      <div class="edu-grid">
-        <div class="edu-card">
-          <div class="edu-icon">🎓</div>
-          <div class="edu-school">Collège de Paris</div>
-          <div class="edu-degree" data-i18n="edu1_degree">MBA spécialisé — IT Project Management</div>
-          <div class="edu-date"   data-i18n="edu1_date">oct. 2022 – nov. 2023 · Paris, France</div>
-        </div>
-        <div class="edu-card">
-          <div class="edu-icon">🎓</div>
-          <div class="edu-school">IAI TOGO</div>
-          <div class="edu-degree" data-i18n="edu2_degree">Diplôme d'Ingénieur — Informatique</div>
-          <div class="edu-date"   data-i18n="edu2_date">2016 – 2019 · Lomé, Togo</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================================================
-       EXPERIENCE
-  ============================================================ -->
-  <section id="experience">
-    <div class="container">
-      <p class="section-label" data-i18n="exp_label">Expérience</p>
-      <h2 class="section-title" data-i18n="exp_title">Parcours <em>professionnel</em></h2>
-
-      <div class="timeline">
-
-        <div class="tl-item">
-          <div class="tl-header">
-            <span class="tl-role" data-i18n="exp1_role">Développeur Web</span>
-            <span class="tl-date" data-i18n="exp1_date">janv. 2024 – aujourd'hui</span>
-          </div>
-          <div class="tl-company" data-i18n="exp1_co">IMMOBTRADER · Freelance · France (Remote)</div>
-          <div class="tl-desc"    data-i18n="exp1_desc">Développement d'applications web pour une plateforme immobilière internationale.</div>
-          <div class="tags">
-            <span class="tag">.NET framework</span>
-            <span class="tag">C#</span>
-            <span class="tag">Conception web</span>
-            <span class="tag">SQL</span>
-          </div>
-        </div>
-
-        <div class="tl-item">
-          <div class="tl-header">
-            <span class="tl-role" data-i18n="exp2_role">Point Focal IT | Gestion de déclaration fiscale</span>
-            <span class="tl-date" data-i18n="exp2_date">févr. 2025 – aujourd'hui</span>
-          </div>
-          <div class="tl-company" data-i18n="exp2_co">Office Togolais des Recettes – OTR · Kara, Togo</div>
-          <div class="tl-desc"    data-i18n="exp2_desc">Coordination IT et gestion de déclaration fiscale.</div>
-          <div class="tags">
-            <span class="tag">MudBlazor</span>
-            <span class="tag">Microsoft Excel</span>
-            <span class="tag">Gestion IT</span>
-          </div>
-        </div>
-
-        <div class="tl-item">
-          <div class="tl-header">
-            <span class="tl-role" data-i18n="exp3_role">Technicien de support informatique</span>
-            <span class="tl-date" data-i18n="exp3_date">janv. 2025 – aujourd'hui</span>
-          </div>
-          <div class="tl-company" data-i18n="exp3_co">Office Togolais des Recettes – OTR · Kara, Togo</div>
-          <div class="tl-desc"    data-i18n="exp3_desc">Support technique utilisateurs, câblage réseau, maintenance préventive et curative.</div>
-          <div class="tags">
-            <span class="tag">Câblage</span>
-            <span class="tag">Maintenance</span>
-            <span class="tag">Support IT</span>
-          </div>
-        </div>
-
-        <div class="tl-item">
-          <div class="tl-header">
-            <span class="tl-role" data-i18n="exp4_role">Professionnel technique au contrôle fiscal</span>
-            <span class="tl-date" data-i18n="exp4_date">févr. 2021 – aujourd'hui</span>
-          </div>
-          <div class="tl-company" data-i18n="exp4_co">Office Togolais des Recettes – OTR · Lomé, Togo</div>
-          <div class="tl-desc"    data-i18n="exp4_desc">Assistant chargé de recoupement fiscal. Contrôle et vérification de données fiscales.</div>
-          <div class="tags">
-            <span class="tag">VBA</span>
-            <span class="tag">Excel</span>
-            <span class="tag">Contrôle fiscal</span>
-          </div>
-        </div>
-
-        <div class="tl-item">
-          <div class="tl-header">
-            <span class="tl-role" data-i18n="exp5_role">Développeur Junior .NET / Applications</span>
-            <span class="tl-date" data-i18n="exp5_date">nov. 2019 – févr. 2021</span>
-          </div>
-          <div class="tl-company" data-i18n="exp5_co">Cergi SA · Lomé, Togo</div>
-          <div class="tl-desc"    data-i18n="exp5_desc">Développement d'applications métier avec .NET et Blazor.</div>
-          <div class="tags">
-            <span class="tag">.NET</span>
-            <span class="tag">Blazor</span>
-            <span class="tag">SQL</span>
-            <span class="tag">C#</span>
-          </div>
-        </div>
-
-        <div class="tl-item">
-          <div class="tl-header">
-            <span class="tl-role" data-i18n="exp6_role">Développeur Web Java — Stage</span>
-            <span class="tl-date" data-i18n="exp6_date">juin – août 2019</span>
-          </div>
-          <div class="tl-company" data-i18n="exp6_co">DSA MBANK · Lomé, Togo</div>
-          <div class="tl-desc"    data-i18n="exp6_desc">Mise en place d'une plateforme de gestion et de numérisation de documents bancaires.</div>
-          <div class="tags">
-            <span class="tag">Java</span>
-            <span class="tag">Web</span>
-            <span class="tag">GED</span>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================================================
-       SKILLS
-  ============================================================ -->
-  <section id="skills">
-    <div class="container">
-      <p class="section-label" data-i18n="skills_label">Compétences</p>
-      <h2 class="section-title" data-i18n="skills_title">Stack <em>technique</em></h2>
-
-      <div class="skills-grid">
-        <div class="skill-card">
-          <div class="skill-icon">🖥️</div>
-          <div class="skill-cat" data-i18n="skill1_cat">Développement</div>
-          <div class="skill-list">
-            <span class="tag">.NET / C#</span>
-            <span class="tag">Blazor</span>
-            <span class="tag">MudBlazor</span>
-            <span class="tag">Java</span>
-            <span class="tag">HTML / CSS</span>
-            <span class="tag">JavaScript</span>
-          </div>
-        </div>
-        <div class="skill-card">
-          <div class="skill-icon">🗄️</div>
-          <div class="skill-cat" data-i18n="skill2_cat">Base de données</div>
-          <div class="skill-list">
-            <span class="tag">SQL Server</span>
-            <span class="tag">MySQL</span>
-            <span class="tag">PostgreSQL</span>
-          </div>
-        </div>
-        <div class="skill-card">
-          <div class="skill-icon">📊</div>
-          <div class="skill-cat" data-i18n="skill3_cat">Outils &amp; Bureautique</div>
-          <div class="skill-list">
-            <span class="tag">VBA / Excel</span>
-            <span class="tag">Microsoft 365</span>
-            <span class="tag">Conception web</span>
-            <span class="tag">Git</span>
-          </div>
-        </div>
-        <div class="skill-card">
-          <div class="skill-icon">🔧</div>
-          <div class="skill-cat" data-i18n="skill4_cat">IT &amp; Management</div>
-          <div class="skill-list">
-            <span class="tag">Support IT</span>
-            <span class="tag">Câblage réseau</span>
-            <span class="tag">Gestion de projet</span>
-            <span class="tag">Contrôle fiscal</span>
+    <!--
+      PHOTO HERO
+      ✏️  Pour ajouter votre photo :
+          1. Placez votre image dans le même dossier (ex: photo.jpg)
+          2. Remplacez le bloc .photo-placeholder par :
+             <img src="photo.jpg" alt="Pierre Kossi DEGBOEVI" />
+    -->
+    <div class="hero-photo-wrap">
+      <div class="hero-photo-ring">
+        <div class="hero-photo-inner">
+          <!-- <img src="photo.jpg" alt="Pierre Kossi DEGBOEVI" /> -->
+          <div class="photo-placeholder">
+            <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+              <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+            </svg>
+            <span>photo.jpg</span>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- ============================================================
-       PROJECTS — 6 projets
-  ============================================================ -->
-  <section id="projects">
-    <div class="container">
-      <p class="section-label" data-i18n="projects_label">Projets</p>
-      <h2 class="section-title" data-i18n="projects_title">Réalisations <em>notables</em></h2>
+  <div class="hero-scroll">
+    <span class="scroll-line"></span>
+    <span data-i18n="hero.scroll">Scroll</span>
+  </div>
+</section>
 
-      <div class="projects-grid">
-
-        <!-- Projet 1 -->
-        <div class="project-card">
-          <div class="project-header">
-            <div class="project-emoji">🚌</div>
-            <div class="project-meta">
-              <div class="project-category" data-i18n="proj1_cat">Transport / E-commerce</div>
-              <div class="project-year"     data-i18n="proj1_year">2021 – aujourd'hui</div>
-            </div>
-          </div>
-          <div class="project-body">
-            <div class="project-title" data-i18n="proj1_title">Vente en ligne de tickets de bus</div>
-            <div class="project-desc"  data-i18n="proj1_desc">Plateforme de vente et réservation de tickets de transport en ligne. Projet STORMEYES — digitalisation de l'accès au transport en Afrique.</div>
-            <div class="tags">
-              <span class="tag">.NET</span><span class="tag">C#</span><span class="tag">SQL</span><span class="tag">Web</span>
-            </div>
-          </div>
-          <div class="project-footer">
-            <div class="project-links">
-              <!-- ✏️ Remplacez # par vos vrais liens -->
-              <a href="#" class="project-link" data-i18n="link_demo">↗ Démo</a>
-              <a href="#" class="project-link secondary" data-i18n="link_github">GitHub</a>
-            </div>
-            <span class="project-status status-active" data-i18n="proj1_status">En cours</span>
-          </div>
-        </div>
-
-        <!-- Projet 2 -->
-        <div class="project-card">
-          <div class="project-header">
-            <div class="project-emoji">🎓</div>
-            <div class="project-meta">
-              <div class="project-category" data-i18n="proj2_cat">Éducation / Plateforme</div>
-              <div class="project-year"     data-i18n="proj2_year">2018 – aujourd'hui</div>
-            </div>
-          </div>
-          <div class="project-body">
-            <div class="project-title" data-i18n="proj2_title">Ma Fianu</div>
-            <div class="project-desc"  data-i18n="proj2_desc">Plateforme de mise en relation entre apprenants et encadreurs / mentors selon les domaines de compétences.</div>
-            <div class="tags">
-              <span class="tag">Java</span><span class="tag">Web App</span><span class="tag">SQL</span>
-            </div>
-          </div>
-          <div class="project-footer">
-            <div class="project-links">
-              <a href="#" class="project-link" data-i18n="link_demo">↗ Démo</a>
-              <a href="#" class="project-link secondary" data-i18n="link_github">GitHub</a>
-            </div>
-            <span class="project-status status-active" data-i18n="proj2_status">En cours</span>
-          </div>
-        </div>
-
-        <!-- Projet 3 -->
-        <div class="project-card">
-          <div class="project-header">
-            <div class="project-emoji">🏦</div>
-            <div class="project-meta">
-              <div class="project-category" data-i18n="proj3_cat">Banque / GED</div>
-              <div class="project-year"     data-i18n="proj3_year">2019</div>
-            </div>
-          </div>
-          <div class="project-body">
-            <div class="project-title" data-i18n="proj3_title">Plateforme GED — DSA MBANK</div>
-            <div class="project-desc"  data-i18n="proj3_desc">Système de gestion électronique de documents et numérisation pour le secteur bancaire. Stage de fin d'études ingénieur.</div>
-            <div class="tags">
-              <span class="tag">Java</span><span class="tag">GED</span><span class="tag">Numérisation</span>
-            </div>
-          </div>
-          <div class="project-footer">
-            <div class="project-links">
-              <a href="#" class="project-link" data-i18n="link_more">⌥ En savoir plus</a>
-            </div>
-            <span class="project-status status-completed" data-i18n="proj3_status">Terminé</span>
-          </div>
-        </div>
-
-        <!-- Projet 4 -->
-        <div class="project-card">
-          <div class="project-header">
-            <div class="project-emoji">🏠</div>
-            <div class="project-meta">
-              <div class="project-category" data-i18n="proj4_cat">Immobilier / Web App</div>
-              <div class="project-year"     data-i18n="proj4_year">2024 – aujourd'hui</div>
-            </div>
-          </div>
-          <div class="project-body">
-            <div class="project-title" data-i18n="proj4_title">IMMOBTRADER — Dashboard Freelance</div>
-            <div class="project-desc"  data-i18n="proj4_desc">Application web de gestion d'annonces immobilières internationales. Interface admin, API REST et base de données relationnelle.</div>
-            <div class="tags">
-              <span class="tag">.NET</span><span class="tag">C#</span><span class="tag">Blazor</span><span class="tag">SQL Server</span>
-            </div>
-          </div>
-          <div class="project-footer">
-            <div class="project-links">
-              <a href="#" class="project-link" data-i18n="link_demo">↗ Démo</a>
-              <a href="#" class="project-link secondary" data-i18n="link_github">GitHub</a>
-            </div>
-            <span class="project-status status-active" data-i18n="proj4_status">En cours</span>
-          </div>
-        </div>
-
-        <!-- Projet 5 -->
-        <div class="project-card">
-          <div class="project-header">
-            <div class="project-emoji">📊</div>
-            <div class="project-meta">
-              <div class="project-category" data-i18n="proj5_cat">Fiscal / Automatisation</div>
-              <div class="project-year"     data-i18n="proj5_year">2022</div>
-            </div>
-          </div>
-          <div class="project-body">
-            <div class="project-title" data-i18n="proj5_title">Outil de recoupement fiscal — OTR</div>
-            <div class="project-desc"  data-i18n="proj5_desc">Automatisation des contrôles de cohérence fiscale via macros VBA et tableaux de bord Excel avancés. Réduction du temps de traitement des données.</div>
-            <div class="tags">
-              <span class="tag">VBA</span><span class="tag">Excel</span><span class="tag">Automatisation</span>
-            </div>
-          </div>
-          <div class="project-footer">
-            <div class="project-links">
-              <a href="#" class="project-link" data-i18n="link_more">⌥ En savoir plus</a>
-            </div>
-            <span class="project-status status-completed" data-i18n="proj5_status">Terminé</span>
-          </div>
-        </div>
-
-        <!-- Projet 6 -->
-        <div class="project-card">
-          <div class="project-header">
-            <div class="project-emoji">🌐</div>
-            <div class="project-meta">
-              <div class="project-category" data-i18n="proj6_cat">Portfolio / Open Source</div>
-              <div class="project-year"     data-i18n="proj6_year">2025</div>
-            </div>
-          </div>
-          <div class="project-body">
-            <div class="project-title" data-i18n="proj6_title">Portfolio Personnel — PKD</div>
-            <div class="project-desc"  data-i18n="proj6_desc">Ce portfolio ! Conçu en HTML/CSS/JS pur, hébergé sur GitHub Pages. Design sombre, animations CSS, responsive et multilingue FR/EN.</div>
-            <div class="tags">
-              <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">GitHub Pages</span>
-            </div>
-          </div>
-          <div class="project-footer">
-            <div class="project-links">
-              <a href="https://alexcruss.github.io/portfolio/" target="_blank" rel="noopener" class="project-link" data-i18n="link_visit">↗ Voir le site</a>
-              <a href="https://github.com/alexcruss/portfolio"  target="_blank" rel="noopener" class="project-link secondary" data-i18n="link_github">GitHub</a>
-            </div>
-            <span class="project-status status-online" data-i18n="proj6_status">En ligne</span>
-          </div>
-        </div>
-
+<!-- ============================================================
+     ABOUT
+============================================================ -->
+<section id="about">
+  <div class="about-grid reveal">
+    <div class="about-text">
+      <div class="section-header">
+        <span class="section-tag" data-i18n="about.tag">À propos</span>
+        <h2 data-i18n="about.title">Ingénieur, développeur &amp;<br><em>gestionnaire IT</em></h2>
+        <div class="divider"></div>
+      </div>
+      <p data-i18n="about.p1"><strong>Ingénieur des Travaux Informatiques</strong> diplômé de l'IAI Togo avec un MBA spécialisé en IT Project Management du Collège de Paris. Je conçois et développe des applications robustes tout en gérant des projets IT de bout en bout.</p>
+      <p data-i18n="about.p2">Actuellement Point Focal IT &amp; Technicien de support à l'<strong>Office Togolais des Recettes (OTR)</strong>, je combine expertise technique et gestion fiscale. En parallèle, je développe en freelance pour des clients internationaux.</p>
+      <div class="about-stats">
+        <div class="stat-card"><div class="stat-number">5+</div><div class="stat-label" data-i18n="about.s1">Ans d'expérience</div></div>
+        <div class="stat-card"><div class="stat-number">5</div><div class="stat-label"  data-i18n="about.s2">Entreprises</div></div>
+        <div class="stat-card"><div class="stat-number">MBA</div><div class="stat-label" data-i18n="about.s3">MBA IT Project Mgmt</div></div>
+        <div class="stat-card"><div class="stat-number">🌍</div><div class="stat-label"  data-i18n="about.s4">Togo · Remote</div></div>
       </div>
     </div>
-  </section>
 
-  <!-- ============================================================
-       CONTACT
-  ============================================================ -->
-  <section id="contact">
-    <div class="container">
-      <p class="section-label" data-i18n="contact_label">Contact</p>
-      <h2 class="section-title" data-i18n="contact_title">Travaillons <em>ensemble</em></h2>
-
-      <div class="contact-grid">
-
-        <div class="contact-info">
-          <p data-i18n="contact_intro">Un projet en tête ? Une opportunité ? N'hésitez pas à me contacter — je réponds généralement sous 24h.</p>
-          <div class="contact-links">
-            <a href="mailto:pierredegboevi@gmail.com" class="contact-link-item">
-              <div class="contact-link-icon">✉</div>
-              <div>
-                <div class="contact-link-text">pierredegboevi@gmail.com</div>
-                <div class="contact-link-label" data-i18n="contact_email_lbl">Email — réponse sous 24h</div>
-              </div>
-            </a>
-            <a href="https://www.linkedin.com/in/pierre-kossi-degboevi" target="_blank" rel="noopener" class="contact-link-item">
-              <div class="contact-link-icon">in</div>
-              <div>
-                <div class="contact-link-text">LinkedIn</div>
-                <div class="contact-link-label" data-i18n="contact_li_lbl">pierre-kossi-degboevi</div>
-              </div>
-            </a>
-            <div class="contact-link-item">
-              <div class="contact-link-icon">📍</div>
-              <div>
-                <div class="contact-link-text" data-i18n="contact_loc">Kara, Togo</div>
-                <div class="contact-link-label" data-i18n="contact_loc_lbl">Disponible en remote</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <form id="contact-form" class="contact-form" novalidate>
-          <div class="form-row">
-            <div class="form-group">
-              <label data-i18n="form_name">Nom</label>
-              <input type="text" required data-i18n-placeholder="form_name_ph" placeholder="Votre nom" />
-            </div>
-            <div class="form-group">
-              <label data-i18n="form_email">Email</label>
-              <input type="email" required data-i18n-placeholder="form_email_ph" placeholder="votre@email.com" />
-            </div>
-          </div>
-          <div class="form-group">
-            <label data-i18n="form_subject">Sujet</label>
-            <input type="text" required data-i18n-placeholder="form_subj_ph" placeholder="Sujet du message" />
-          </div>
-          <div class="form-group">
-            <label data-i18n="form_message">Message</label>
-            <textarea required data-i18n-placeholder="form_msg_ph" placeholder="Décrivez votre projet ou opportunité..."></textarea>
-          </div>
-          <button type="submit" class="btn btn-primary btn-submit" data-i18n="form_send">
-            Envoyer le message →
-          </button>
-        </form>
-
+    <!--
+      PHOTO À PROPOS
+      ✏️  Pour ajouter votre photo :
+          Même procédure que la photo Hero ci-dessus.
+    -->
+    <div class="about-visual">
+      <div class="float-tag">💻 .NET · Blazor · Java</div>
+      <div class="about-photo-frame">
+        <!-- <img src="photo.jpg" alt="Pierre Kossi DEGBOEVI" /> -->
+        <div class="avatar-initials">PKD</div>
+        <div class="avatar-badge" data-i18n="about.badge">Ingénieur<br>Informatique</div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ============================================================
-       FOOTER
-  ============================================================ -->
-  <footer>
-    <span class="footer-logo">PKD.</span>
-    <p data-i18n="footer_copy">© 2025 Pierre Kossi DEGBOEVI — Fait avec ♥ depuis le Togo</p>
-  </footer>
+<!-- ============================================================
+     EDUCATION
+============================================================ -->
+<section id="education">
+  <div class="section-header reveal">
+    <span class="section-tag" data-i18n="edu.tag">Formation</span>
+    <h2 data-i18n="edu.title">Parcours <em>académique</em></h2>
+    <div class="divider"></div>
+  </div>
+  <div class="edu-grid">
+    <div class="edu-card reveal">
+      <div class="edu-school">🎓 Collège de Paris</div>
+      <div class="edu-degree" data-i18n="edu.d1">MBA spécialisé — IT Project Management</div>
+      <div class="edu-year">oct. 2022 – nov. 2023 · Paris, France</div>
+    </div>
+    <div class="edu-card reveal">
+      <div class="edu-school">🎓 IAI TOGO</div>
+      <div class="edu-degree" data-i18n="edu.d2">Diplôme d'Ingénieur — Informatique</div>
+      <div class="edu-year">2016 – 2019 · Lomé, Togo</div>
+    </div>
+  </div>
+</section>
 
-  <!-- JavaScript -->
-  <script src="script.js"></script>
+<!-- ============================================================
+     EXPERIENCE
+============================================================ -->
+<section id="experience">
+  <div class="section-header reveal">
+    <span class="section-tag" data-i18n="exp.tag">Expérience</span>
+    <h2 data-i18n="exp.title">Parcours <em>professionnel</em></h2>
+    <div class="divider"></div>
+  </div>
+  <div class="exp-timeline">
+
+    <div class="exp-item reveal">
+      <div class="exp-company">IMMOBTRADER · Freelance · France (Remote)</div>
+      <div class="exp-role" data-i18n="e1.role">Développeur Web</div>
+      <div class="exp-meta">janv. 2024 – <span data-i18n="now">aujourd'hui</span> · 2 ans 3 mois</div>
+      <div class="exp-desc" data-i18n="e1.desc">Développement d'applications web pour une plateforme immobilière internationale. Conception et maintenance front-end et back-end.</div>
+      <div class="exp-tags"><span class="tag">.NET framework</span><span class="tag">C#</span><span class="tag">Conception web</span><span class="tag">SQL</span></div>
+    </div>
+
+    <div class="exp-item reveal">
+      <div class="exp-company">Office Togolais des Recettes – OTR · Kara, Togo</div>
+      <div class="exp-role" data-i18n="e2.role">Point Focal IT | Gestion de déclaration fiscale</div>
+      <div class="exp-meta">févr. 2025 – <span data-i18n="now">aujourd'hui</span></div>
+      <div class="exp-desc" data-i18n="e2.desc">Coordination IT et gestion de déclaration fiscale. Interlocuteur technique principal entre les équipes métier et la direction informatique.</div>
+      <div class="exp-tags"><span class="tag">Microsoft Excel</span><span class="tag">MudBlazor</span><span class="tag">Gestion IT</span></div>
+    </div>
+
+    <div class="exp-item reveal">
+      <div class="exp-company">Office Togolais des Recettes – OTR · Kara, Togo</div>
+      <div class="exp-role" data-i18n="e3.role">Technicien de support informatique</div>
+      <div class="exp-meta">janv. 2025 – <span data-i18n="now">aujourd'hui</span></div>
+      <div class="exp-desc" data-i18n="e3.desc">Support technique utilisateurs, câblage réseau, maintenance préventive et curative du parc informatique de l'OTR.</div>
+      <div class="exp-tags"><span class="tag">Câblage</span><span class="tag">Maintenance</span><span class="tag">Support IT</span></div>
+    </div>
+
+    <div class="exp-item reveal">
+      <div class="exp-company">Office Togolais des Recettes – OTR · Lomé, Togo</div>
+      <div class="exp-role" data-i18n="e4.role">Professionnel technique au contrôle fiscal</div>
+      <div class="exp-meta">févr. 2021 – <span data-i18n="now">aujourd'hui</span> · 5 ans 2 mois</div>
+      <div class="exp-desc" data-i18n="e4.desc">Assistant chargé de recoupement fiscal. Contrôle et vérification de données fiscales, assistance administrative de direction.</div>
+      <div class="exp-tags"><span class="tag">VBA</span><span class="tag">Excel</span><span class="tag">Contrôle fiscal</span></div>
+    </div>
+
+    <div class="exp-item reveal">
+      <div class="exp-company">Cergi SA · Lomé, Togo</div>
+      <div class="exp-role" data-i18n="e5.role">Développeur Junior .NET / Applications</div>
+      <div class="exp-meta">nov. 2019 – févr. 2021 · 1 an 4 mois</div>
+      <div class="exp-desc" data-i18n="e5.desc">Développement d'applications métier avec .NET et Blazor. Participation à des projets d'envergure en équipe pluridisciplinaire.</div>
+      <div class="exp-tags"><span class="tag">.NET</span><span class="tag">Blazor</span><span class="tag">SQL</span><span class="tag">C#</span></div>
+    </div>
+
+    <div class="exp-item reveal">
+      <div class="exp-company">DSA MBANK · Stage · Lomé, Togo</div>
+      <div class="exp-role" data-i18n="e6.role">Développeur Web Java</div>
+      <div class="exp-meta">juin 2019 – août 2019 · 3 mois</div>
+      <div class="exp-desc" data-i18n="e6.desc">Mise en place d'une plateforme de gestion et de numérisation de documents dans le secteur bancaire.</div>
+      <div class="exp-tags"><span class="tag">Java</span><span class="tag">Web</span><span class="tag">GED</span></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     SKILLS
+============================================================ -->
+<section id="skills">
+  <div class="section-header reveal">
+    <span class="section-tag" data-i18n="sk.tag">Compétences</span>
+    <h2 data-i18n="sk.title">Stack <em>technique</em></h2>
+    <div class="divider"></div>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-category reveal">
+      <div class="skill-icon">🖥️</div>
+      <h3 data-i18n="sk.c1">Développement</h3>
+      <div class="skill-tags">
+        <span class="tag">.NET / C#</span><span class="tag">Blazor</span><span class="tag">MudBlazor</span>
+        <span class="tag">Java</span><span class="tag">HTML / CSS</span><span class="tag">JavaScript</span>
+      </div>
+    </div>
+    <div class="skill-category reveal">
+      <div class="skill-icon">🗄️</div>
+      <h3 data-i18n="sk.c2">Base de données</h3>
+      <div class="skill-tags">
+        <span class="tag">SQL Server</span><span class="tag">MySQL</span><span class="tag">PostgreSQL</span>
+      </div>
+    </div>
+    <div class="skill-category reveal">
+      <div class="skill-icon">📊</div>
+      <h3 data-i18n="sk.c3">Outils &amp; Bureautique</h3>
+      <div class="skill-tags">
+        <span class="tag">VBA / Excel</span><span class="tag">Microsoft 365</span>
+        <span class="tag">Conception web</span><span class="tag">Git</span>
+      </div>
+    </div>
+    <div class="skill-category reveal">
+      <div class="skill-icon">🔧</div>
+      <h3 data-i18n="sk.c4">IT &amp; Management</h3>
+      <div class="skill-tags">
+        <span class="tag">Support IT</span><span class="tag">Câblage réseau</span>
+        <span class="tag">Gestion de projet</span><span class="tag">Gestion de crise</span>
+        <span class="tag">Contrôle fiscal</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PROJECTS — 6 cartes
+============================================================ -->
+<section id="projects">
+  <div class="section-header reveal">
+    <span class="section-tag" data-i18n="pr.tag">Projets</span>
+    <h2 data-i18n="pr.title">Réalisations <em>notables</em></h2>
+    <div class="divider"></div>
+  </div>
+  <div class="projects-grid">
+
+    <!-- Projet 1 -->
+    <div class="project-card reveal">
+      <div class="project-thumb">🚌</div>
+      <div class="project-body">
+        <div class="project-meta">
+          <span class="project-type" data-i18n="pr.p1.type">Transport / E-commerce</span>
+          <span class="project-year-label">2021 – <span data-i18n="now">aujourd'hui</span></span>
+        </div>
+        <div class="project-title" data-i18n="pr.p1.title">Vente en ligne de tickets de bus</div>
+        <p class="project-desc" data-i18n="pr.p1.desc">Plateforme de vente et réservation de tickets de transport en ligne. Projet STORMEYES — digitalisation de l'accès au transport en Afrique.</p>
+        <div class="project-stack"><span class="tag">.NET</span><span class="tag">C#</span><span class="tag">SQL</span><span class="tag">Web</span></div>
+        <div class="project-links">
+          <!-- ✏️ Remplacez # par vos vrais liens -->
+          <a href="#" data-i18n="pr.demo">↗ Voir le projet</a>
+          <a href="#" data-i18n="pr.github">GitHub</a>
+          <span class="project-status status-active" data-i18n="pr.p1.status">En cours</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Projet 2 -->
+    <div class="project-card reveal">
+      <div class="project-thumb">🎓</div>
+      <div class="project-body">
+        <div class="project-meta">
+          <span class="project-type" data-i18n="pr.p2.type">Éducation / Plateforme</span>
+          <span class="project-year-label">2018 – <span data-i18n="now">aujourd'hui</span></span>
+        </div>
+        <div class="project-title" data-i18n="pr.p2.title">Ma Fianu</div>
+        <p class="project-desc" data-i18n="pr.p2.desc">Plateforme de mise en relation entre apprenants et encadreurs / mentors selon les domaines de compétences.</p>
+        <div class="project-stack"><span class="tag">Web App</span><span class="tag">Java</span><span class="tag">SQL</span></div>
+        <div class="project-links">
+          <a href="#" data-i18n="pr.demo">↗ Voir le projet</a>
+          <a href="#" data-i18n="pr.github">GitHub</a>
+          <span class="project-status status-active" data-i18n="pr.p2.status">En cours</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Projet 3 -->
+    <div class="project-card reveal">
+      <div class="project-thumb">🏦</div>
+      <div class="project-body">
+        <div class="project-meta">
+          <span class="project-type" data-i18n="pr.p3.type">Banque / GED</span>
+          <span class="project-year-label">2019</span>
+        </div>
+        <div class="project-title" data-i18n="pr.p3.title">Plateforme GED — DSA MBANK</div>
+        <p class="project-desc" data-i18n="pr.p3.desc">Système de gestion électronique de documents et numérisation pour le secteur bancaire. Stage de fin d'études ingénieur.</p>
+        <div class="project-stack"><span class="tag">Java</span><span class="tag">GED</span><span class="tag">Numérisation</span></div>
+        <div class="project-links">
+          <a href="#" data-i18n="pr.more">⌥ En savoir plus</a>
+          <span class="project-status status-completed" data-i18n="pr.p3.status">Terminé</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Projet 4 -->
+    <div class="project-card reveal">
+      <div class="project-thumb">🏠</div>
+      <div class="project-body">
+        <div class="project-meta">
+          <span class="project-type" data-i18n="pr.p4.type">Immobilier / Web App</span>
+          <span class="project-year-label">2024 – <span data-i18n="now">aujourd'hui</span></span>
+        </div>
+        <div class="project-title" data-i18n="pr.p4.title">IMMOBTRADER — Dashboard</div>
+        <p class="project-desc" data-i18n="pr.p4.desc">Application web de gestion d'annonces immobilières internationales. Interface admin, API REST et base de données relationnelle.</p>
+        <div class="project-stack"><span class="tag">.NET</span><span class="tag">C#</span><span class="tag">Blazor</span><span class="tag">SQL Server</span></div>
+        <div class="project-links">
+          <!-- ✏️ Remplacez # par vos vrais liens -->
+          <a href="#" data-i18n="pr.demo">↗ Voir le projet</a>
+          <a href="#" data-i18n="pr.github">GitHub</a>
+          <span class="project-status status-active" data-i18n="pr.p4.status">En cours</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Projet 5 -->
+    <div class="project-card reveal">
+      <div class="project-thumb">📊</div>
+      <div class="project-body">
+        <div class="project-meta">
+          <span class="project-type" data-i18n="pr.p5.type">Fiscal / Automatisation</span>
+          <span class="project-year-label">2022</span>
+        </div>
+        <div class="project-title" data-i18n="pr.p5.title">Outil de recoupement fiscal — OTR</div>
+        <p class="project-desc" data-i18n="pr.p5.desc">Automatisation des contrôles de cohérence fiscale via macros VBA et tableaux de bord Excel avancés. Réduction du temps de traitement.</p>
+        <div class="project-stack"><span class="tag">VBA</span><span class="tag">Excel</span><span class="tag">Automatisation</span></div>
+        <div class="project-links">
+          <a href="#" data-i18n="pr.more">⌥ En savoir plus</a>
+          <span class="project-status status-completed" data-i18n="pr.p5.status">Terminé</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Projet 6 -->
+    <div class="project-card reveal">
+      <div class="project-thumb">🌐</div>
+      <div class="project-body">
+        <div class="project-meta">
+          <span class="project-type" data-i18n="pr.p6.type">Portfolio / Open Source</span>
+          <span class="project-year-label">2025</span>
+        </div>
+        <div class="project-title" data-i18n="pr.p6.title">Portfolio Personnel — PKD</div>
+        <p class="project-desc" data-i18n="pr.p6.desc">Ce portfolio ! Conçu en HTML/CSS/JS pur, hébergé sur GitHub Pages. Design sombre, animations, responsive et multilingue FR/EN.</p>
+        <div class="project-stack"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">GitHub Pages</span></div>
+        <div class="project-links">
+          <a href="https://alexcruss.github.io/portfolio/" target="_blank" rel="noopener" data-i18n="pr.visit">↗ Voir le site</a>
+          <a href="https://github.com/alexcruss/portfolio"  target="_blank" rel="noopener" data-i18n="pr.github">GitHub</a>
+          <span class="project-status status-online" data-i18n="pr.p6.status">En ligne</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     CONTACT
+============================================================ -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="section-header reveal">
+      <span class="section-tag" data-i18n="ct.tag">Contact</span>
+      <h2 data-i18n="ct.title">Travaillons<br><em>ensemble</em></h2>
+      <div class="divider"></div>
+    </div>
+    <p class="contact-desc reveal" data-i18n="ct.desc">Un projet en tête ? Une opportunité ? N'hésitez pas à me contacter — je réponds généralement sous 24h.</p>
+    <div class="contact-form reveal">
+      <div class="form-row">
+        <div class="form-group">
+          <label data-i18n="ct.name">Nom</label>
+          <input type="text" id="f-name" placeholder="Votre nom" />
+        </div>
+        <div class="form-group">
+          <label data-i18n="ct.email">Email</label>
+          <input type="email" placeholder="hello@email.com" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label data-i18n="ct.subject">Sujet</label>
+        <input type="text" id="f-subj" />
+      </div>
+      <div class="form-group">
+        <label data-i18n="ct.message">Message</label>
+        <textarea id="f-msg"></textarea>
+      </div>
+      <div class="form-submit">
+        <button class="btn btn-primary" data-i18n="ct.send">Envoyer le message →</button>
+      </div>
+    </div>
+    <div class="contact-links reveal">
+      <a href="mailto:pierredegboevi@gmail.com" class="contact-link">✉ pierredegboevi@gmail.com</a>
+      <a href="https://www.linkedin.com/in/pierre-kossi-degboevi" target="_blank" rel="noopener" class="contact-link">in LinkedIn</a>
+      <a href="#" class="contact-link">📍 Kara, Togo</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+============================================================ -->
+<footer>
+  <p>© 2025 Pierre Kossi <span class="footer-accent">DEGBOEVI</span></p>
+  <p data-i18n="ft.made">Fait avec ♥ depuis le Togo</p>
+</footer>
+
+<script src="script.js"></script>
 </body>
 </html>
