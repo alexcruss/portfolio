@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Pierre Kossi DEGBOEVI — Ingénieur Informatique & Développeur .NET/Blazor/Java. Portfolio en ligne depuis le Togo." />
+  <title>Pierre Kossi DEGBOEVI — Ingénieur Informatique</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Epilogue:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0d14; --surface: #111520; --surface2: #181d2e;
+      --border: rgba(255,255,255,0.07); --accent: #c8a96e; --accent2: #4f8ef7;
+      --text: #e8eaf2; --muted: #7a7f96; --radius: 12px;
+      --nav-h: 68px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html {
+      scroll-behavior: smooth;
+      /* BUG 1 FIX — ancres nav ne cachaient pas le titre sous la barre fixe */
+      scroll-padding-top: var(--nav-h);
+    }
+    body { font-family: 'Epilogue', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; overflow-x: hidden; cursor: none; }
+    a, button, input, textarea, select { cursor: none; }
+
+    /* BUG 2 FIX — curseur caché au départ (position 0,0 visible avant 1er mousemove) */
+    .cursor      { width: 10px; height: 10px; background: var(--accent); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999; opacity: 0; transition: opacity .15s; }
+    .cursor-ring { width: 36px; height: 36px; border: 1px solid rgba(200,169,110,0.4); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9998; opacity: 0; transition: opacity .15s, left .0s, top .0s; }
+    .cursor.visible, .cursor-ring.visible { opacity: 1; }
+
+    /* NAV */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 5%; background: rgba(10,13,20,0.88); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+    .nav-logo { font-family: 'Syne', sans-serif; font-size: 1.15rem; font-weight: 800; color: var(--text); text-decoration: none; }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; align-items: center; gap: 2rem; }
+    .nav-links a { font-size: 0.82rem; font-weight: 500; text-decoration: none; color: var(--muted); letter-spacing: 0.05em; text-transform: uppercase; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--text); }
+    /* BUG 3 FIX — lien nav actif au scroll n'avait aucun style */
+    .nav-links a.active { color: var(--accent); }
+    .lang-toggle { display: flex; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-left: 1.5rem; }
+    .lang-toggle button { padding: 0.35rem 0.75rem; background: transparent; border: none; color: var(--muted); font-family: 'Epilogue', sans-serif; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.05em; transition: background 0.2s, color 0.2s; }
+    .lang-toggle button.active { background: var(--accent); color: #0a0d14; }
+
+    /* HERO */
+    #hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 8rem 5% 4rem; position: relative; overflow: hidden; }
+    .hero-bg { position: absolute; inset: 0; z-index: 0; background: radial-gradient(ellipse 80% 60% at 70% 40%, rgba(79,142,247,0.08) 0%, transparent 70%), radial-gradient(ellipse 50% 50% at 20% 80%, rgba(200,169,110,0.06) 0%, transparent 70%); }
+    .hero-grid { position: absolute; inset: 0; z-index: 0; background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px); background-size: 60px 60px; mask-image: radial-gradient(ellipse 80% 80% at center, black 30%, transparent 100%); }
+    .hero-inner { position: relative; z-index: 1; display: flex; align-items: center; gap: 5rem; max-width: 1200px; }
+    .hero-content { max-width: 820px; flex: 1; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.4rem 1rem; background: rgba(200,169,110,0.1); border: 1px solid rgba(200,169,110,0.25); border-radius: 50px; font-size: 0.8rem; font-weight: 500; color: var(--accent); letter-spacing: 0.05em; margin-bottom: 1.75rem; animation: fadeUp 0.6s ease both; }
+    .hero-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.4)} }
+    h1 { font-family: 'Syne', sans-serif; font-size: clamp(2.5rem, 6.5vw, 5rem); font-weight: 800; line-height: 1.08; letter-spacing: -0.03em; animation: fadeUp 0.6s 0.1s ease both; }
+    h1 .line2 { color: var(--accent); display: block; }
+    .hero-sub { font-size: clamp(1rem, 2vw, 1.15rem); color: var(--muted); max-width: 560px; margin-top: 1.5rem; font-weight: 300; animation: fadeUp 0.6s 0.2s ease both; }
+    .hero-cta { display: flex; gap: 1rem; margin-top: 2.5rem; flex-wrap: wrap; animation: fadeUp 0.6s 0.3s ease both; }
+    .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.85rem 1.75rem; border-radius: var(--radius); font-family: 'Epilogue', sans-serif; font-size: 0.9rem; font-weight: 600; text-decoration: none; transition: all 0.25s; border: none; }
+    .btn-primary { background: var(--accent); color: #0a0d14; }
+    .btn-primary:hover { background: #d9bc88; transform: translateY(-2px); }
+    .btn-outline { background: transparent; color: var(--text); border: 1px solid var(--border); }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+    .hero-scroll { position: absolute; bottom: 2.5rem; left: 5%; display: flex; align-items: center; gap: 0.75rem; font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); z-index: 1; animation: fadeUp 0.6s 0.5s ease both; }
+    .scroll-line { width: 40px; height: 1px; background: linear-gradient(90deg, var(--accent), transparent); }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+
+    /* Hero photo */
+    .hero-photo-wrap { flex-shrink: 0; }
+    .hero-photo-ring { width: 240px; height: 240px; border-radius: 50%; padding: 3px; background: linear-gradient(135deg, var(--accent), rgba(200,169,110,0.25)); position: relative; }
+    .hero-photo-ring::after { content: ''; position: absolute; inset: -14px; border-radius: 50%; border: 1px dashed rgba(200,169,110,0.22); animation: spinRing 20s linear infinite; pointer-events: none; }
+    @keyframes spinRing { to { transform: rotate(360deg); } }
+    .hero-photo-inner { width: 100%; height: 100%; border-radius: 50%; background: var(--surface2); overflow: hidden; display: flex; align-items: center; justify-content: center; }
+    .hero-photo-inner img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+    .photo-placeholder { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; width: 100%; height: 100%; color: var(--muted); font-size: 0.72rem; text-align: center; padding: 1rem; }
+    .photo-placeholder svg { opacity: 0.25; }
+
+    /* SECTIONS */
+    section { padding: 6rem 5%; }
+    .section-header { margin-bottom: 3.5rem; }
+    .section-tag { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem; display: block; }
+    h2 { font-family: 'Syne', sans-serif; font-size: clamp(1.8rem, 4vw, 2.75rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; }
+    h2 em { font-style: normal; color: var(--accent); }
+    .divider { width: 50px; height: 2px; background: linear-gradient(90deg, var(--accent), transparent); margin-top: 1.25rem; }
+
+    /* ABOUT */
+    #about .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .about-text p { color: var(--muted); margin-bottom: 1.25rem; font-size: 1.05rem; line-height: 1.8; }
+    .about-text p strong { color: var(--text); font-weight: 600; }
+    .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-top: 2rem; }
+    .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; transition: border-color 0.2s, transform 0.2s; }
+    .stat-card:hover { border-color: rgba(200,169,110,0.3); transform: translateY(-3px); }
+    .stat-number { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; color: var(--accent); line-height: 1; margin-bottom: 0.35rem; }
+    .stat-label { font-size: 0.82rem; color: var(--muted); }
+    .about-visual { position: relative; display: flex; align-items: center; justify-content: center; }
+    .avatar-frame { width: 300px; height: 360px; border-radius: 16px; background: var(--surface2); border: 1px solid var(--border); position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+    .avatar-frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .avatar-initials { font-family: 'Syne', sans-serif; font-size: 4.5rem; font-weight: 800; color: var(--accent); opacity: 0.5; }
+    .avatar-frame::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--accent), var(--accent2)); z-index: 1; }
+    .avatar-badge { position: absolute; bottom: -1rem; right: -1rem; background: var(--accent); color: #0a0d14; border-radius: 12px; padding: 1rem 1.25rem; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.85rem; text-align: center; line-height: 1.4; box-shadow: 0 8px 30px rgba(200,169,110,0.3); }
+    .float-tag { position: absolute; top: 1.5rem; left: -1.5rem; background: var(--surface); border: 1px solid rgba(79,142,247,0.3); border-radius: 8px; padding: 0.75rem 1rem; font-size: 0.8rem; color: var(--accent2); font-weight: 500; box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+
+    /* EDUCATION */
+    #education { background: var(--surface); }
+    .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .edu-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.75rem; transition: border-color 0.3s, transform 0.3s; }
+    .edu-card:hover { border-color: rgba(200,169,110,0.3); transform: translateY(-4px); }
+    .edu-school { font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 700; color: var(--text); margin-bottom: 0.4rem; }
+    .edu-degree { font-size: 0.9rem; color: var(--accent); font-weight: 500; margin-bottom: 0.3rem; }
+    .edu-year { font-size: 0.8rem; color: var(--muted); }
+
+    /* EXPERIENCE */
+    .exp-timeline { position: relative; padding-left: 2rem; }
+    .exp-timeline::before { content: ''; position: absolute; left: 0; top: 0.5rem; bottom: 0; width: 1px; background: linear-gradient(to bottom, var(--accent), transparent); }
+    .exp-item { position: relative; margin-bottom: 2.5rem; }
+    .exp-item::before { content: ''; position: absolute; left: -2.35rem; top: 0.45rem; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); border: 2px solid var(--bg); box-shadow: 0 0 0 3px rgba(200,169,110,0.2); }
+    .exp-company { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent2); margin-bottom: 0.3rem; }
+    .exp-role { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: 0.25rem; }
+    .exp-meta { font-size: 0.82rem; color: var(--muted); margin-bottom: 0.75rem; }
+    .exp-desc { font-size: 0.92rem; color: var(--muted); line-height: 1.7; }
+    .exp-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.75rem; }
+
+    /* SKILLS */
+    #skills { background: var(--surface); }
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; }
+    .skill-category { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.75rem; transition: border-color 0.3s, transform 0.3s; }
+    .skill-category:hover { border-color: rgba(200,169,110,0.3); transform: translateY(-4px); }
+    .skill-icon { width: 44px; height: 44px; border-radius: 10px; background: rgba(200,169,110,0.1); border: 1px solid rgba(200,169,110,0.2); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; margin-bottom: 1.25rem; }
+    .skill-category h3 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 1.25rem; color: var(--text); }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .tag { padding: 0.3rem 0.8rem; background: var(--surface2); border: 1px solid var(--border); border-radius: 50px; font-size: 0.78rem; color: var(--muted); transition: all 0.2s; cursor: default; }
+    .tag:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* PROJECTS */
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+    .project-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; transition: border-color 0.3s, transform 0.3s; display: flex; flex-direction: column; }
+    .project-card:hover { border-color: rgba(200,169,110,0.4); transform: translateY(-5px); }
+    .project-thumb { height: 160px; background: var(--surface2); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; position: relative; overflow: hidden; flex-shrink: 0; }
+    .project-thumb::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(200,169,110,0.05), rgba(79,142,247,0.05)); }
+    .project-body { padding: 1.5rem; flex: 1; display: flex; flex-direction: column; }
+    .project-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; }
+    .project-type { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
+    .project-year { font-size: 0.78rem; color: var(--muted); }
+    .project-title { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.6rem; color: var(--text); }
+    .project-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.6; margin-bottom: 1rem; flex: 1; }
+    .project-stack { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .project-stack .tag { font-size: 0.72rem; padding: 0.2rem 0.6rem; }
+    .project-links { display: flex; gap: 0.75rem; margin-top: 1.25rem; padding-top: 1.25rem; border-top: 1px solid var(--border); align-items: center; flex-wrap: wrap; }
+    .project-links a { font-size: 0.82rem; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .project-links a:hover { color: var(--accent); }
+    .project-status { margin-left: auto; font-size: 0.7rem; font-weight: 600; padding: 0.2rem 0.7rem; border-radius: 50px; letter-spacing: 0.04em; white-space: nowrap; }
+    .status-active    { background: rgba(200,169,110,0.12); border: 1px solid rgba(200,169,110,0.3); color: var(--accent); }
+    .status-completed { background: rgba(79,142,247,0.1);   border: 1px solid rgba(79,142,247,0.25); color: var(--accent2); }
+    .status-online    { background: rgba(80,200,120,0.1);   border: 1px solid rgba(80,200,120,0.3);  color: #5ec87a; }
+
+    /* CONTACT */
+    #contact { background: var(--surface); }
+    .contact-inner { max-width: 680px; margin: 0 auto; text-align: center; }
+    .contact-inner .section-header { text-align: center; }
+    .contact-inner .divider { margin: 1.25rem auto 0; }
+    .contact-desc { color: var(--muted); margin-bottom: 2.5rem; font-size: 1.05rem; }
+    .contact-form { text-align: left; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1rem; }
+    label { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); }
+    input, textarea { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 0.85rem 1rem; color: var(--text); font-family: 'Epilogue', sans-serif; font-size: 0.95rem; outline: none; transition: border-color 0.2s; width: 100%; }
+    input:focus, textarea:focus { border-color: var(--accent); }
+    /* BUG 4 FIX — placeholders invisibles sur fond sombre */
+    ::placeholder { color: var(--muted); opacity: 0.6; }
+    textarea { min-height: 140px; resize: vertical; }
+    .form-submit { text-align: center; margin-top: 1.25rem; }
+    /* BUG 5 FIX — feedback visuel après envoi formulaire */
+    .form-success { display: none; text-align: center; padding: 1.25rem; background: rgba(80,200,120,0.08); border: 1px solid rgba(80,200,120,0.25); border-radius: var(--radius); color: #5ec87a; font-size: 0.95rem; margin-top: 1rem; }
+    .form-success.show { display: block; }
+    .contact-links { display: flex; justify-content: center; gap: 1.25rem; margin-top: 2.5rem; flex-wrap: wrap; }
+    .contact-link { display: flex; align-items: center; gap: 0.6rem; padding: 0.75rem 1.5rem; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); color: var(--muted); text-decoration: none; font-size: 0.88rem; font-weight: 500; transition: all 0.2s; }
+    .contact-link:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+    footer { padding: 2rem 5%; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    footer p { font-size: 0.82rem; color: var(--muted); }
+    .footer-accent { color: var(--accent); }
+
+    /* SCROLL REVEAL */
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) { .hero-inner { flex-direction: column; } .hero-photo-wrap { display: none; } }
+    @media (max-width: 768px) {
+      #about .about-grid { grid-template-columns: 1fr; }
+      .about-visual { display: none; }
+      .edu-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="cursor"      id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">PKD<span>.</span></a>
+  <div class="nav-links" id="navLinks">
+    <a href="#about"      data-i18n="nav.about"    data-section="about">À propos</a>
+    <a href="#experience" data-i18n="nav.exp"       data-section="experience">Expérience</a>
+    <a href="#skills"     data-i18n="nav.skills"    data-section="skills">Compétences</a>
+    <a href="#projects"   data-i18n="nav.projects"  data-section="projects">Projets</a>
+    <a href="#contact"    data-i18n="nav.contact"   data-section="contact">Contact</a>
+  </div>
+  <div class="lang-toggle">
+    <button id="btn-fr" class="active" onclick="setLang('fr')">FR</button>
+    <button id="btn-en"                onclick="setLang('en')">EN</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-badge" data-i18n="hero.badge">Disponible pour de nouveaux projets</div>
+      <h1>
+        <span data-i18n="hero.line1">Pierre Kossi</span>
+        <span class="line2">DEGBOEVI</span>
+      </h1>
+      <p class="hero-sub" data-i18n="hero.sub">Ingénieur Informatique &amp; Développeur d'Applications — Togo · Disponible à distance</p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-primary" data-i18n="hero.cta1">Voir mes projets</a>
+        <a href="#contact"  class="btn btn-outline"  data-i18n="hero.cta2">Me contacter</a>
+      </div>
+    </div>
+    <div class="hero-photo-wrap">
+      <div class="hero-photo-ring">
+        <div class="hero-photo-inner">
+          <!-- ✏️ Pour ajouter votre photo : décommentez la ligne suivante et supprimez le bloc .photo-placeholder -->
+          <!-- <img src="photo.jpg" alt="Pierre Kossi DEGBOEVI" /> -->
+          <div class="photo-placeholder">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+            <span>Ajoutez photo.jpg</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll"><span class="scroll-line"></span><span data-i18n="hero.scroll">Scroll</span></div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid reveal">
+    <div class="about-text">
+      <div class="section-header">
+        <span class="section-tag" data-i18n="about.tag">À propos</span>
+        <h2 data-i18n="about.title">Ingénieur, développeur &amp;<br><em>gestionnaire IT</em></h2>
+        <div class="divider"></div>
+      </div>
+      <p data-i18n="about.p1"><strong>Ingénieur des Travaux Informatiques</strong> diplômé de l'IAI Togo avec un MBA spécialisé en IT Project Management du Collège de Paris. Je conçois et développe des applications robustes tout en gérant des projets IT de bout en bout.</p>
+      <p data-i18n="about.p2">Actuellement Point Focal IT &amp; Technicien de support à l'<strong>Office Togolais des Recettes (OTR)</strong>, je combine expertise technique et gestion fiscale. En parallèle, je développe en freelance pour des clients internationaux.</p>
+      <div class="about-stats">
+        <div class="stat-card"><div class="stat-number">5+</div><div class="stat-label" data-i18n="about.s1">Ans d'expérience</div></div>
+        <div class="stat-card"><div class="stat-number">5</div><div class="stat-label"  data-i18n="about.s2">Entreprises</div></div>
+        <div class="stat-card"><div class="stat-number">MBA</div><div class="stat-label" data-i18n="about.s3">IT Project Mgmt</div></div>
+        <div class="stat-card"><div class="stat-number">🌍</div><div class="stat-label"  data-i18n="about.s4">Togo · Remote</div></div>
+      </div>
+    </div>
+    <div class="about-visual">
+      <div class="float-tag">💻 .NET · Blazor · Java</div>
+      <div class="avatar-frame">
+        <!-- ✏️ Pour ajouter votre photo : décommentez la ligne suivante -->
+        <!-- <img src="photo.jpg" alt="Pierre Kossi DEGBOEVI" /> -->
+        <div class="avatar-initials">PKD</div>
+        <div class="avatar-badge" data-i18n="about.badge">Ingénieur<br>Informatique</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-header reveal">
+    <span class="section-tag" data-i18n="edu.tag">Formation</span>
+    <h2 data-i18n="edu.title">Parcours <em>académique</em></h2>
+    <div class="divider"></div>
+  </div>
+  <div class="edu-grid">
+    <div class="edu-card reveal">
+      <div class="edu-school">🎓 Collège de Paris</div>
+      <div class="edu-degree" data-i18n="edu.d1">MBA spécialisé — IT Project Management</div>
+      <div class="edu-year">oct. 2022 – nov. 2023 · Paris, France</div>
+    </div>
+    <div class="edu-card reveal">
+      <div class="edu-school">🎓 IAI TOGO</div>
+      <div class="edu-degree" data-i18n="edu.d2">Diplôme d'Ingénieur — Informatique</div>
+      <div class="edu-year">2016 – 2019 · Lomé, Togo</div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-header reveal">
+    <span class="section-tag" data-i18n="exp.tag">Expérience</span>
+    <h2 data-i18n="exp.title">Parcours <em>professionnel</em></h2>
+    <div class="divider"></div>
+  </div>
+  <div class="exp-timeline">
+    <div class="exp-item reveal">
+      <div class="exp-company">IMMOBTRADER · Freelance · France (Remote)</div>
+      <div class="exp-role" data-i18n="e1.role">Développeur Web</div>
+      <div class="exp-meta">janv. 2024 – <span data-i18n="now">aujourd'hui</span> · 2 ans 3 mois</div>
+      <div class="exp-desc" data-i18n="e1.desc">Développement d'applications web pour une plateforme immobilière internationale. Conception et maintenance front-end et back-end.</div>
+      <div class="exp-tags"><span class="tag">.NET framework</span><span class="tag">C#</span><span class="tag">Conception web</span><span class="tag">SQL</span></div>
+    </div>
+    <div class="exp-item reveal">
+      <div class="exp-company">Office Togolais des Recettes – OTR · Kara, Togo</div>
+      <div class="exp-role" data-i18n="e2.role">Point Focal IT | Gestion de déclaration fiscale</div>
+      <div class="exp-meta">févr. 2025 – <span data-i18n="now">aujourd'hui</span></div>
+      <div class="exp-desc" data-i18n="e2.desc">Coordination IT et gestion de déclaration fiscale. Interlocuteur technique principal entre les équipes métier et la direction informatique.</div>
+      <div class="exp-tags"><span class="tag">Microsoft Excel</span><span class="tag">MudBlazor</span><span class="tag">Gestion IT</span></div>
+    </div>
+    <div class="exp-item reveal">
+      <div class="exp-company">Office Togolais des Recettes – OTR · Kara, Togo</div>
+      <div class="exp-role" data-i18n="e3.role">Technicien de support informatique</div>
+      <div class="exp-meta">janv. 2025 – <span data-i18n="now">aujourd'hui</span></div>
+      <div class="exp-desc" data-i18n="e3.desc">Support technique utilisateurs, câblage réseau, maintenance préventive et curative du parc informatique de l'OTR.</div>
+      <div class="exp-tags"><span class="tag">Câblage</span><span class="tag">Maintenance</span><span class="tag">Support IT</span></div>
+    </div>
+    <div class="exp-item reveal">
+      <div class="exp-company">Office Togolais des Recettes – OTR · Lomé, Togo</div>
+      <div class="exp-role" data-i18n="e4.role">Professionnel technique au contrôle fiscal</div>
+      <div class="exp-meta">févr. 2021 – <span data-i18n="now">aujourd'hui</span> · 5 ans 2 mois</div>
+      <div class="exp-desc" data-i18n="e4.desc">Assistant chargé de recoupement fiscal. Contrôle et vérification de données fiscales, assistance administrative de direction.</div>
+      <div class="exp-tags"><span class="tag">VBA</span><span class="tag">Excel</span><span class="tag">Contrôle fiscal</span></div>
+    </div>
+    <div class="exp-item reveal">
+      <div class="exp-company">Cergi SA · Lomé, Togo</div>
+      <div class="exp-role" data-i18n="e5.role">Développeur Junior .NET / Applications</div>
+      <div class="exp-meta">nov. 2019 – févr. 2021 · 1 an 4 mois</div>
+      <div class="exp-desc" data-i18n="e5.desc">Développement d'applications métier avec .NET et Blazor. Participation à des projets d'envergure en équipe pluridisciplinaire.</div>
+      <div class="exp-tags"><span class="tag">.NET</span><span class="tag">Blazor</span><span class="tag">SQL</span><span class="tag">C#</span></div>
+    </div>
+    <div class="exp-item reveal">
+      <div class="exp-company">DSA MBANK · Stage · Lomé, Togo</div>
+      <div class="exp-role" data-i18n="e6.role">Développeur Web Java</div>
+      <div class="exp-meta">juin 2019 – août 2019 · 3 mois</div>
+      <div class="exp-desc" data-i18n="e6.desc">Mise en place d'une plateforme de gestion et de numérisation de documents dans le secteur bancaire.</div>
+      <div class="exp-tags"><span class="tag">Java</span><span class="tag">Web</span><span class="tag">GED</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-header reveal">
+    <span class="section-tag" data-i18n="sk.tag">Compétences</span>
+    <h2 data-i18n="sk.title">Stack <em>technique</em></h2>
+    <div class="divider"></div>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-category reveal">
+      <div class="skill-icon">🖥️</div>
+      <h3 data-i18n="sk.c1">Développement</h3>
+      <div class="skill-tags"><span class="tag">.NET / C#</span><span class="tag">Blazor</span><span class="tag">MudBlazor</span><span class="tag">Java</span><span class="tag">HTML / CSS</span><span class="tag">JavaScript</span></div>
+    </div>
+    <div class="skill-category reveal">
+      <div class="skill-icon">🗄️</div>
+      <h3 data-i18n="sk.c2">Base de données</h3>
+      <div class="skill-tags"><span class="tag">SQL Server</span><span class="tag">MySQL</span><span class="tag">PostgreSQL</span></div>
+    </div>
+    <div class="skill-category reveal">
+      <div class="skill-icon">📊</div>
+      <h3 data-i18n="sk.c3">Outils &amp; Bureautique</h3>
+      <div class="skill-tags"><span class="tag">VBA / Excel</span><span class="tag">Microsoft 365</span><span class="tag">Conception web</span><span class="tag">Git</span></div>
+    </div>
+    <div class="skill-category reveal">
+      <div class="skill-icon">🔧</div>
+      <h3 data-i18n="sk.c4">IT &amp; Management</h3>
+      <div class="skill-tags"><span class="tag">Support IT</span><span class="tag">Câblage réseau</span><span class="tag">Gestion de projet</span><span class="tag">Gestion de crise</span><span class="tag">Contrôle fiscal</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-header reveal">
+    <span class="section-tag" data-i18n="pr.tag">Projets</span>
+    <h2 data-i18n="pr.title">Réalisations <em>notables</em></h2>
+    <div class="divider"></div>
+  </div>
+  <div class="projects-grid">
+    <div class="project-card reveal">
+      <div class="project-thumb">🚌</div>
+      <div class="project-body">
+        <div class="project-meta"><span class="project-type" data-i18n="pr.p1.type">Transport / E-commerce</span><span class="project-year">2021 – <span data-i18n="now">aujourd'hui</span></span></div>
+        <div class="project-title" data-i18n="pr.p1.title">Vente en ligne de tickets de bus</div>
+        <p class="project-desc" data-i18n="pr.p1.desc">Plateforme de vente et réservation de tickets de transport en ligne. Projet STORMEYES — digitalisation de l'accès au transport en Afrique.</p>
+        <div class="project-stack"><span class="tag">.NET</span><span class="tag">C#</span><span class="tag">SQL</span><span class="tag">Web</span></div>
+        <div class="project-links"><a href="#" data-i18n="pr.demo">↗ Voir le projet</a><a href="#" data-i18n="pr.github">GitHub</a><span class="project-status status-active" data-i18n="pr.p1.status">En cours</span></div>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-thumb">🎓</div>
+      <div class="project-body">
+        <div class="project-meta"><span class="project-type" data-i18n="pr.p2.type">Éducation / Plateforme</span><span class="project-year">2018 – <span data-i18n="now">aujourd'hui</span></span></div>
+        <div class="project-title" data-i18n="pr.p2.title">Ma Fianu</div>
+        <p class="project-desc" data-i18n="pr.p2.desc">Plateforme de mise en relation entre apprenants et encadreurs / mentors selon les domaines de compétences.</p>
+        <div class="project-stack"><span class="tag">Web App</span><span class="tag">Java</span><span class="tag">SQL</span></div>
+        <div class="project-links"><a href="#" data-i18n="pr.demo">↗ Voir le projet</a><a href="#" data-i18n="pr.github">GitHub</a><span class="project-status status-active" data-i18n="pr.p2.status">En cours</span></div>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-thumb">🏦</div>
+      <div class="project-body">
+        <div class="project-meta"><span class="project-type" data-i18n="pr.p3.type">Banque / GED</span><span class="project-year">2019</span></div>
+        <div class="project-title" data-i18n="pr.p3.title">Plateforme GED — DSA MBANK</div>
+        <p class="project-desc" data-i18n="pr.p3.desc">Système de gestion électronique de documents et numérisation pour le secteur bancaire. Stage de fin d'études ingénieur.</p>
+        <div class="project-stack"><span class="tag">Java</span><span class="tag">GED</span><span class="tag">Numérisation</span></div>
+        <div class="project-links"><a href="#" data-i18n="pr.more">⌥ En savoir plus</a><span class="project-status status-completed" data-i18n="pr.p3.status">Terminé</span></div>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-thumb">🏠</div>
+      <div class="project-body">
+        <div class="project-meta"><span class="project-type" data-i18n="pr.p4.type">Immobilier / Web App</span><span class="project-year">2024 – <span data-i18n="now">aujourd'hui</span></span></div>
+        <div class="project-title" data-i18n="pr.p4.title">IMMOBTRADER — Dashboard</div>
+        <p class="project-desc" data-i18n="pr.p4.desc">Application web de gestion d'annonces immobilières internationales. Interface admin, API REST et base de données relationnelle.</p>
+        <div class="project-stack"><span class="tag">.NET</span><span class="tag">C#</span><span class="tag">Blazor</span><span class="tag">SQL Server</span></div>
+        <div class="project-links"><a href="#" data-i18n="pr.demo">↗ Voir le projet</a><a href="#" data-i18n="pr.github">GitHub</a><span class="project-status status-active" data-i18n="pr.p4.status">En cours</span></div>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-thumb">📊</div>
+      <div class="project-body">
+        <div class="project-meta"><span class="project-type" data-i18n="pr.p5.type">Fiscal / Automatisation</span><span class="project-year">2022</span></div>
+        <div class="project-title" data-i18n="pr.p5.title">Outil de recoupement fiscal — OTR</div>
+        <p class="project-desc" data-i18n="pr.p5.desc">Automatisation des contrôles de cohérence fiscale via macros VBA et tableaux de bord Excel avancés. Réduction du temps de traitement des données.</p>
+        <div class="project-stack"><span class="tag">VBA</span><span class="tag">Excel</span><span class="tag">Automatisation</span></div>
+        <div class="project-links"><a href="#" data-i18n="pr.more">⌥ En savoir plus</a><span class="project-status status-completed" data-i18n="pr.p5.status">Terminé</span></div>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-thumb">🌐</div>
+      <div class="project-body">
+        <div class="project-meta"><span class="project-type" data-i18n="pr.p6.type">Portfolio / Open Source</span><span class="project-year">2025</span></div>
+        <div class="project-title" data-i18n="pr.p6.title">Portfolio Personnel — PKD</div>
+        <p class="project-desc" data-i18n="pr.p6.desc">Ce portfolio ! Conçu en HTML/CSS/JS pur, hébergé sur GitHub Pages. Design sombre, animations, responsive et multilingue FR/EN.</p>
+        <div class="project-stack"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">GitHub Pages</span></div>
+        <div class="project-links"><a href="https://alexcruss.github.io/portfolio/" target="_blank" rel="noopener" data-i18n="pr.visit">↗ Voir le site</a><a href="https://github.com/alexcruss/portfolio" target="_blank" rel="noopener" data-i18n="pr.github">GitHub</a><span class="project-status status-online" data-i18n="pr.p6.status">En ligne</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="section-header reveal">
+      <span class="section-tag" data-i18n="ct.tag">Contact</span>
+      <h2 data-i18n="ct.title">Travaillons<br><em>ensemble</em></h2>
+      <div class="divider"></div>
+    </div>
+    <p class="contact-desc reveal" data-i18n="ct.desc">Un projet en tête ? Une opportunité ? N'hésitez pas à me contacter — je réponds généralement sous 24h.</p>
+    <!-- BUG 6 FIX — pas de <form>, pas de submit handler, page rechargait -->
+    <form class="contact-form reveal" id="contactForm" novalidate>
+      <div class="form-row">
+        <div class="form-group"><label data-i18n="ct.name">Nom</label><input type="text" id="f-name" placeholder="Votre nom" required /></div>
+        <div class="form-group"><label data-i18n="ct.email">Email</label><input type="email" id="f-email" placeholder="hello@email.com" required /></div>
+      </div>
+      <div class="form-group"><label data-i18n="ct.subject">Sujet</label><input type="text" id="f-subj" required /></div>
+      <div class="form-group"><label data-i18n="ct.message">Message</label><textarea id="f-msg" required></textarea></div>
+      <div class="form-submit"><button type="submit" class="btn btn-primary" data-i18n="ct.send">Envoyer le message →</button></div>
+      <div class="form-success" id="formSuccess">✓ Message envoyé ! Je vous réponds sous 24h.</div>
+    </form>
+    <div class="contact-links reveal">
+      <a href="mailto:pierredegboevi@gmail.com" class="contact-link">✉ pierredegboevi@gmail.com</a>
+      <a href="https://www.linkedin.com/in/pierre-kossi-degboevi" target="_blank" rel="noopener" class="contact-link">in LinkedIn</a>
+      <a href="#" class="contact-link">📍 Kara, Togo</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 Pierre Kossi <span class="footer-accent">DEGBOEVI</span></p>
+  <p data-i18n="ft.made">Fait avec ♥ depuis le Togo</p>
+</footer>
+
+<script>
+/* ================================================================
+   TRADUCTIONS
+================================================================ */
+const T = {
+  fr: {
+    "nav.about":"À propos","nav.exp":"Expérience","nav.skills":"Compétences","nav.projects":"Projets","nav.contact":"Contact",
+    "hero.badge":"Disponible pour de nouveaux projets","hero.line1":"Pierre Kossi",
+    "hero.sub":"Ingénieur Informatique & Développeur d'Applications — Togo · Disponible à distance",
+    "hero.cta1":"Voir mes projets","hero.cta2":"Me contacter","hero.scroll":"Scroll",
+    "about.tag":"À propos","about.title":"Ingénieur, développeur &<br><em>gestionnaire IT</em>",
+    "about.p1":"<strong>Ingénieur des Travaux Informatiques</strong> diplômé de l'IAI Togo avec un MBA spécialisé en IT Project Management du Collège de Paris. Je conçois et développe des applications robustes tout en gérant des projets IT de bout en bout.",
+    "about.p2":"Actuellement Point Focal IT & Technicien de support à l'<strong>Office Togolais des Recettes (OTR)</strong>, je combine expertise technique et gestion fiscale. En parallèle, je développe en freelance pour des clients internationaux.",
+    "about.s1":"Ans d'expérience","about.s2":"Entreprises","about.s3":"IT Project Mgmt","about.s4":"Togo · Remote","about.badge":"Ingénieur<br>Informatique",
+    "edu.tag":"Formation","edu.title":"Parcours <em>académique</em>","edu.d1":"MBA spécialisé — IT Project Management","edu.d2":"Diplôme d'Ingénieur — Informatique",
+    "exp.tag":"Expérience","exp.title":"Parcours <em>professionnel</em>","now":"aujourd'hui",
+    "e1.role":"Développeur Web","e1.desc":"Développement d'applications web pour une plateforme immobilière internationale. Conception et maintenance front-end et back-end.",
+    "e2.role":"Point Focal IT | Gestion de déclaration fiscale","e2.desc":"Coordination IT et gestion de déclaration fiscale. Interlocuteur technique principal entre les équipes métier et la direction informatique.",
+    "e3.role":"Technicien de support informatique","e3.desc":"Support technique utilisateurs, câblage réseau, maintenance préventive et curative du parc informatique de l'OTR.",
+    "e4.role":"Professionnel technique au contrôle fiscal","e4.desc":"Assistant chargé de recoupement fiscal. Contrôle et vérification de données fiscales, assistance administrative de direction.",
+    "e5.role":"Développeur Junior .NET / Applications","e5.desc":"Développement d'applications métier avec .NET et Blazor. Participation à des projets d'envergure en équipe pluridisciplinaire.",
+    "e6.role":"Développeur Web Java","e6.desc":"Mise en place d'une plateforme de gestion et de numérisation de documents dans le secteur bancaire.",
+    "sk.tag":"Compétences","sk.title":"Stack <em>technique</em>","sk.c1":"Développement","sk.c2":"Base de données","sk.c3":"Outils & Bureautique","sk.c4":"IT & Management",
+    "pr.tag":"Projets","pr.title":"Réalisations <em>notables</em>",
+    "pr.p1.type":"Transport / E-commerce","pr.p1.title":"Vente en ligne de tickets de bus","pr.p1.desc":"Plateforme de vente et réservation de tickets de transport en ligne. Projet STORMEYES — digitalisation de l'accès au transport en Afrique.","pr.p1.status":"En cours",
+    "pr.p2.type":"Éducation / Plateforme","pr.p2.title":"Ma Fianu","pr.p2.desc":"Plateforme de mise en relation entre apprenants et encadreurs / mentors selon les domaines de compétences.","pr.p2.status":"En cours",
+    "pr.p3.type":"Banque / GED","pr.p3.title":"Plateforme GED — DSA MBANK","pr.p3.desc":"Système de gestion électronique de documents et numérisation pour le secteur bancaire. Stage de fin d'études ingénieur.","pr.p3.status":"Terminé",
+    "pr.p4.type":"Immobilier / Web App","pr.p4.title":"IMMOBTRADER — Dashboard","pr.p4.desc":"Application web de gestion d'annonces immobilières internationales. Interface admin, API REST et base de données relationnelle.","pr.p4.status":"En cours",
+    "pr.p5.type":"Fiscal / Automatisation","pr.p5.title":"Outil de recoupement fiscal — OTR","pr.p5.desc":"Automatisation des contrôles de cohérence fiscale via macros VBA et tableaux de bord Excel avancés. Réduction du temps de traitement des données.","pr.p5.status":"Terminé",
+    "pr.p6.type":"Portfolio / Open Source","pr.p6.title":"Portfolio Personnel — PKD","pr.p6.desc":"Ce portfolio ! Conçu en HTML/CSS/JS pur, hébergé sur GitHub Pages. Design sombre, animations, responsive et multilingue FR/EN.","pr.p6.status":"En ligne",
+    "pr.demo":"↗ Voir le projet","pr.github":"GitHub","pr.more":"⌥ En savoir plus","pr.visit":"↗ Voir le site",
+    "ct.tag":"Contact","ct.title":"Travaillons<br><em>ensemble</em>","ct.desc":"Un projet en tête ? Une opportunité ? N'hésitez pas à me contacter — je réponds généralement sous 24h.",
+    "ct.name":"Nom","ct.email":"Email","ct.subject":"Sujet","ct.message":"Message","ct.send":"Envoyer le message →",
+    "ft.made":"Fait avec ♥ depuis le Togo"
+  },
+  en: {
+    "nav.about":"About","nav.exp":"Experience","nav.skills":"Skills","nav.projects":"Projects","nav.contact":"Contact",
+    "hero.badge":"Available for new projects","hero.line1":"Pierre Kossi",
+    "hero.sub":"IT Engineer & Application Developer — Togo · Available remotely",
+    "hero.cta1":"View my projects","hero.cta2":"Get in touch","hero.scroll":"Scroll",
+    "about.tag":"About","about.title":"Engineer, developer &<br><em>IT manager</em>",
+    "about.p1":"<strong>Computer Science Engineer</strong> graduated from IAI Togo with a specialized MBA in IT Project Management from Collège de Paris. I design and build robust applications while managing IT projects end-to-end.",
+    "about.p2":"Currently IT Focal Point & Support Technician at the <strong>Office Togolais des Recettes (OTR)</strong>, I combine technical expertise with fiscal management. I also develop freelance for international clients.",
+    "about.s1":"Years of experience","about.s2":"Companies","about.s3":"IT Project Mgmt","about.s4":"Togo · Remote","about.badge":"IT<br>Engineer",
+    "edu.tag":"Education","edu.title":"Academic <em>background</em>","edu.d1":"Specialized MBA — IT Project Management","edu.d2":"Engineering Degree — Computer Science",
+    "exp.tag":"Experience","exp.title":"Professional <em>journey</em>","now":"present",
+    "e1.role":"Web Developer","e1.desc":"Web application development for an international real estate platform. Design and maintenance of front-end and back-end features.",
+    "e2.role":"IT Focal Point | Tax Declaration Management","e2.desc":"IT coordination and tax declaration management. Main technical liaison between business teams and IT management.",
+    "e3.role":"IT Support Technician","e3.desc":"User technical support, network cabling, preventive and corrective maintenance of IT infrastructure.",
+    "e4.role":"Technical Professional in Tax Audit","e4.desc":"Assistant in fiscal cross-checking. Tax data control and verification, administrative assistance to management.",
+    "e5.role":"Junior .NET / Application Developer","e5.desc":"Business application development with .NET and Blazor. Involvement in large-scale team projects.",
+    "e6.role":"Java Web Developer","e6.desc":"Implementation of an electronic document management and digitization platform for the banking sector.",
+    "sk.tag":"Skills","sk.title":"Technical <em>stack</em>","sk.c1":"Development","sk.c2":"Database","sk.c3":"Tools & Office","sk.c4":"IT & Management",
+    "pr.tag":"Projects","pr.title":"Notable <em>work</em>",
+    "pr.p1.type":"Transport / E-commerce","pr.p1.title":"Online Bus Ticket Sales","pr.p1.desc":"Online sales and booking platform for public transport tickets. STORMEYES project — digitalizing transport access in Africa.","pr.p1.status":"Active",
+    "pr.p2.type":"Education / Platform","pr.p2.title":"Ma Fianu","pr.p2.desc":"Platform connecting learners with mentors and tutors across specific skill domains.","pr.p2.status":"Active",
+    "pr.p3.type":"Banking / DMS","pr.p3.title":"DMS Platform — DSA MBANK","pr.p3.desc":"Electronic document management and digitization system for the banking sector. Final engineering internship project.","pr.p3.status":"Completed",
+    "pr.p4.type":"Real Estate / Web App","pr.p4.title":"IMMOBTRADER — Dashboard","pr.p4.desc":"Web application for managing international real estate listings. Admin interface, REST API and relational database.","pr.p4.status":"Active",
+    "pr.p5.type":"Fiscal / Automation","pr.p5.title":"Tax Cross-referencing Tool — OTR","pr.p5.desc":"Automation of fiscal consistency checks via VBA macros and advanced Excel dashboards. Significant reduction in data processing time.","pr.p5.status":"Completed",
+    "pr.p6.type":"Portfolio / Open Source","pr.p6.title":"Personal Portfolio — PKD","pr.p6.desc":"This portfolio! Built in pure HTML/CSS/JS, hosted on GitHub Pages. Dark design, animations, responsive and bilingual FR/EN.","pr.p6.status":"Live",
+    "pr.demo":"↗ View project","pr.github":"GitHub","pr.more":"⌥ Learn more","pr.visit":"↗ Visit site",
+    "ct.tag":"Contact","ct.title":"Let's work<br><em>together</em>","ct.desc":"Have a project in mind? An opportunity? Feel free to reach out — I usually respond within 24 hours.",
+    "ct.name":"Name","ct.email":"Email","ct.subject":"Subject","ct.message":"Message","ct.send":"Send message →",
+    "ft.made":"Made with ♥ from Togo"
+  }
+};
+
+/* ================================================================
+   TOUT LE JS dans DOMContentLoaded — BUG 7 FIX
+   (scripts s'exécutaient avant que le DOM soit prêt)
+================================================================ */
+document.addEventListener('DOMContentLoaded', function() {
+
+  /* --- LANGUE --- */
+  function setLang(l) {
+    document.documentElement.lang = l;
+    document.getElementById('btn-fr').classList.toggle('active', l === 'fr');
+    document.getElementById('btn-en').classList.toggle('active', l === 'en');
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const k = el.getAttribute('data-i18n');
+      if (T[l][k] !== undefined) el.innerHTML = T[l][k];
+    });
+    const ph = {
+      'f-name':  l==='fr' ? 'Votre nom'    : 'Your name',
+      'f-subj':  l==='fr' ? 'Objet de votre message' : 'Subject of your message',
+      'f-msg':   l==='fr' ? 'Décrivez votre projet ou votre question...' : 'Describe your project or question...',
+      'f-email': l==='fr' ? 'votre@email.com' : 'your@email.com'
+    };
+    Object.entries(ph).forEach(([id, v]) => { const el = document.getElementById(id); if (el) el.placeholder = v; });
+    // Mettre à jour message de succès selon la langue
+    const suc = document.getElementById('formSuccess');
+    if (suc) suc.textContent = l === 'fr' ? '✓ Message envoyé ! Je vous réponds sous 24h.' : '✓ Message sent! I\'ll get back to you within 24h.';
+    try { localStorage.setItem('pkd_lang', l); } catch(e) {}
+  }
+  // Exposer setLang globalement pour les boutons onclick
+  window.setLang = setLang;
+
+  // Restaurer la langue sauvegardée
+  let savedLang = 'fr';
+  try { savedLang = localStorage.getItem('pkd_lang') || 'fr'; } catch(e) {}
+  setLang(savedLang);
+
+  /* --- CURSEUR PERSONNALISÉ — BUG 2 FIX (caché jusqu'au 1er mouvement) --- */
+  const cur  = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0, started = false;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    if (!started) {
+      started = true;
+      cur.classList.add('visible');
+      ring.classList.add('visible');
+      rx = mx; ry = my; // évite le "saut" depuis 0,0
+    }
+  });
+
+  (function tick() {
+    cur.style.left  = (mx - 5)  + 'px';
+    cur.style.top   = (my - 5)  + 'px';
+    rx += (mx - rx - 18) * 0.12;
+    ry += (my - ry - 18) * 0.12;
+    ring.style.left = rx + 'px';
+    ring.style.top  = ry + 'px';
+    requestAnimationFrame(tick);
+  })();
+
+  /* --- SCROLL REVEAL --- */
+  const revealObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        revealObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+  /* --- NAV ACTIVE AU SCROLL — BUG 3 FIX --- */
+  const navLinks = document.querySelectorAll('.nav-links a[data-section]');
+  const sections = document.querySelectorAll('section[id]');
+
+  const navObs = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        navLinks.forEach(a => {
+          a.classList.toggle('active', a.dataset.section === id);
+        });
+      }
+    });
+  }, { rootMargin: '-40% 0px -55% 0px' });
+
+  sections.forEach(s => navObs.observe(s));
+
+  /* --- FORMULAIRE CONTACT — BUG 6 FIX (page rechargait) --- */
+  const form = document.getElementById('contactForm');
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault(); // empêche le rechargement de page
+      const success = document.getElementById('formSuccess');
+      success.classList.add('show');
+      form.reset();
+      // Cacher le message après 5s
+      setTimeout(() => success.classList.remove('show'), 5000);
+    });
+  }
+
+});
+</script>
+</body>
+</html>
