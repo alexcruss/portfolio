@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Pierre Kossi DEGBOEVI — Automatisation & applications métier | Togo</title>
-<meta name="description" content="Ingénieur informatique au Togo : automatisation Excel/VBA, applications métier .NET/Blazor et accompagnement IT pour les PME.">
+<meta name="description" content="Ingénieur informatique au Togo : automatisation Excel/VBA, macros qui font gagner des heures, applications métier .NET/Blazor et accompagnement IT pour les PME.">
 <link rel="icon" type="image/png" href="logo.png">
 <meta name="theme-color" content="#44314F">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -90,6 +90,15 @@ footer{background:#2A1F30;color:#C9BBCB;font-size:13px;padding:24px 0;text-align
 .aih{margin-top:60px}
 .num{display:block;color:var(--gt);font-family:var(--ser);font-weight:700;font-size:20px;letter-spacing:.06em;margin-bottom:4px}
 .note{margin-top:22px;font-family:var(--ser);font-size:19px;font-style:italic;color:var(--p);text-align:center}
+.cases{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.case .num{display:block;font-family:var(--ser);font-size:28px;font-weight:700;color:var(--gold);line-height:1}
+.case h3{margin:6px 0 10px}
+.case p{margin-top:8px;font-size:15px}
+.case p b{display:block;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--gt)}
+.case .res{background:var(--bg);border-left:3px solid var(--gold);padding:8px 12px;border-radius:6px}
+.cta{text-align:center;margin-top:12px}
+#projets>.wrap>.lead{margin-bottom:22px;color:var(--mu)}
+.sub{font-family:var(--ser);font-size:26px;color:var(--pd);margin:44px 0 16px}
 @media(max-width:800px){.about{grid-template-columns:1fr}.about img{max-width:280px}.hero .wrap,.contact{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.b2{margin:10px 0 0}.bar{flex-direction:column;align-items:flex-start}}
 
 /* ===== Animations ===== */
@@ -131,6 +140,78 @@ nav a.act{color:var(--gt);box-shadow:inset 0 -2px 0 var(--gold);border-radius:0}
 .js .rv.in{opacity:1;transform:none}
 .js .rv.in.done{transition:transform .3s,box-shadow .3s,border-color .3s,background .3s;transition-delay:0s}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}.js .rv{opacity:1;transform:none}.head h2:after{width:48px}}
+
+/* ===== Responsive ===== */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+img{max-width:100%;height:auto}
+h1,h2,h3,p,a,span{overflow-wrap:break-word}
+.grid{grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr))}
+.cases{grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
+@media(max-width:1000px){
+  .wrap{padding:0 18px}
+  .about{grid-template-columns:260px 1fr;gap:28px}
+  .hero .wrap{gap:24px}
+  nav a{padding:8px 8px;font-size:13.5px}
+}
+@media(max-width:800px){
+  section{padding:48px 0}
+  .hero{padding:44px 0 72px}
+  .hero p{max-width:none}
+  .bar{flex-direction:row;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:10px 0}
+  .right{display:contents}
+  .brand{order:1;min-width:0;font-size:18px}
+  .lang{order:2;margin-left:auto}
+  nav{order:3;width:100%;flex-wrap:nowrap;overflow-x:auto;gap:4px;padding-bottom:2px;-webkit-overflow-scrolling:touch;scrollbar-width:none;border-top:1px solid var(--bd);padding-top:6px}
+  nav::-webkit-scrollbar{display:none}
+  nav a{white-space:nowrap;flex:0 0 auto;padding:9px 12px}
+  header{position:sticky}
+  html{scroll-padding-top:110px}
+  .about{grid-template-columns:1fr;gap:26px}
+  .about img{max-width:280px;margin:0 auto;box-shadow:8px 8px 0 var(--bd)}
+  .about img:hover{box-shadow:8px 8px 0 var(--bd)}
+  .head h2{font-size:30px}
+  .contact{padding:30px 22px}
+  .contact h2{font-size:28px}
+  .aih{margin-top:44px}
+}
+@media(max-width:560px){
+  .wrap{padding:0 16px}
+  section{padding:40px 0}
+  .hero{padding:34px 0 64px}
+  .hero .btn{display:block;width:100%;text-align:center;margin:0 0 10px}
+  .hero .b2{margin-left:0}
+  .stats{grid-template-columns:repeat(2,1fr);gap:10px;margin-top:-36px}
+  .stat{padding:14px 8px}
+  .stat b{font-size:26px}
+  .stat span{font-size:12px}
+  .card{padding:18px}
+  .head{margin-bottom:22px}
+  .head h2{font-size:27px}
+  .search h2{font-size:20px}
+  .search a{padding:13px 12px;font-size:14.5px}
+  .cases{gap:14px}
+  .case .num{font-size:24px}
+  .sub{font-size:23px;margin:34px 0 14px}
+  .note{font-size:17px}
+  .tl{padding-left:18px}
+  .tl div:before{left:-24px}
+  .contact{padding:26px 18px;border-radius:12px}
+  .contact h2{font-size:25px}
+  .contact .l a{padding:13px 14px;font-size:14.5px}
+  .btn{padding:13px 20px}
+  #pick .box{padding:24px 18px}
+}
+@media(max-width:380px){
+  .brand span{font-size:16px;line-height:1.15}
+  .logo{width:38px;height:38px}
+  h1{font-size:31px}
+  .stats{grid-template-columns:1fr 1fr}
+  .lang button{padding:6px 8px}
+}
+@media(hover:none){
+  .card:hover,.btn:hover,.search a:hover,.search a:hover b,.about img:hover{transform:none;box-shadow:none}
+  .about img:hover{box-shadow:8px 8px 0 var(--bd)}
+}
 </style>
 </head>
 <body>
@@ -181,7 +262,7 @@ nav a.act{color:var(--gt);box-shadow:inset 0 -2px 0 var(--gold);border-radius:0}
 <div class="wrap stats">
 <div class="card stat"><b data-count="5" data-suf="+">5+</b><span data-en="years of experience">ans d’expérience</span></div>
 <div class="card stat"><b>MBA</b><span>IT Project Management</span></div>
-<div class="card stat"><b data-count="6" data-suf="">6</b><span data-en="projects">réalisations</span></div>
+<div class="card stat"><b data-count="11" data-suf="">11</b><span data-en="projects">réalisations</span></div>
 <div class="card stat"><b>OTR</b><span data-en="tax audit experience">expérience en contrôle fiscal</span></div>
 </div>
 
@@ -219,9 +300,44 @@ nav a.act{color:var(--gt);box-shadow:inset 0 -2px 0 var(--gold);border-radius:0}
 </div></section>
 
 <section id="projets"><div class="wrap">
-<div class="head"><small data-en="Projects">Réalisations</small><h2 data-en="Real-world projects">Des projets concrets</h2></div>
+<div class="head"><small data-en="Projects">Réalisations</small><h2 data-en="Tools that save real time">Des outils qui font gagner du temps</h2></div>
+<p class="lead" data-en="Automations designed for my own work and used by my colleagues. Examples and screenshots are shown without any real data.">Des automatisations conçues pour mon propre travail et utilisées par mes collègues. Les exemples et captures sont présentés sans aucune donnée réelle.</p>
+<div class="grid cases">
+<div class="card case"><span class="st" data-en="In use">En usage</span><span class="num">01</span>
+<h3 data-en="Financial statements read in a few clicks, ready for risk analysis">Des états financiers lus en quelques clics, prêts pour l’analyse de risques</h3>
+<p><b data-en="The problem">Le problème</b> <span data-en="Picking the useful figures by hand from financial statements in varied formats takes time and invites errors.">Relever à la main les chiffres utiles dans des états financiers de formats variés prend du temps et favorise les erreurs.</span></p>
+<p><b data-en="What I built">Ce que j’ai créé</b> <span data-en="An Excel file with macros that automatically extracts the useful data and presents it in a ready-to-use format.">Un fichier Excel à macros qui extrait automatiquement les données utiles et les présente dans un format directement exploitable.</span></p>
+<p class="res"><b data-en="The result">Le résultat</b> <span data-en="No re-typing: the analyst goes straight to the analysis, with more reliable data.">Plus de ressaisie : l’analyste commence directement par l’analyse, avec des données plus fiables.</span></p><span class="chip">VBA</span><span class="chip">Excel</span></div>
+<div class="card case"><span class="st" data-en="In use">En usage</span><span class="num">02</span>
+<h3 data-en="Tax PDFs regenerated in batch, no more one-by-one work">Des PDF d’imposition régénérés en lot, sans les refaire un par un</h3>
+<p><b data-en="The problem">Le problème</b> <span data-en="Regenerating tax documents one by one from the issuance files is long and repetitive.">Régénérer les documents d’imposition un à un à partir des fichiers d’émission est long et répétitif.</span></p>
+<p><b data-en="What I built">Ce que j’ai créé</b> <span data-en="An Excel file with macros that reads the issuance files and automatically produces the matching PDFs.">Un fichier Excel à macros qui lit les fichiers d’émission et produit automatiquement les PDF correspondants.</span></p>
+<p class="res"><b data-en="The result">Le résultat</b> <span data-en="Consistent documents produced in series, with far fewer manual steps.">Des documents homogènes, produits en série, avec beaucoup moins de manipulations manuelles.</span></p><span class="chip">VBA</span><span class="chip">Excel</span><span class="chip">PDF</span></div>
+<div class="card case"><span class="st" data-en="In use">En usage</span><span class="num">03</span>
+<h3 data-en="Sydonia and customer/supplier data generated automatically">Des données Sydonia et clients/fournisseurs générées automatiquement</h3>
+<p><b data-en="The problem">Le problème</b> <span data-en="Preparing Sydonia data and customer/supplier lists by hand is tedious and prone to typing errors.">Préparer à la main les données destinées à Sydonia et les listes clients/fournisseurs est fastidieux et risque d’erreurs de saisie.</span></p>
+<p><b data-en="What I built">Ce que j’ai créé</b> <span data-en="An Access project with macros that generates Sydonia data and customer/supplier files from a single database.">Un projet Access avec macros qui génère les données Sydonia et les fichiers clients/fournisseurs à partir d’une base unique.</span></p>
+<p class="res"><b data-en="The result">Le résultat</b> <span data-en="A single data source, ready-to-use files and much lighter preparation work.">Une seule source de données, des fichiers prêts à l’emploi et un travail de préparation nettement allégé.</span></p><span class="chip">Access</span><span class="chip">VBA</span><span class="chip">Sydonia</span></div>
+<div class="card case"><span class="st" data-en="In use">En usage</span><span class="num">04</span>
+<h3 data-en="Weekly reports compiled into a single file">Les rapports hebdomadaires compilés en un seul fichier</h3>
+<p><b data-en="The problem">Le problème</b> <span data-en="Gathering everyone’s weekly reports into a single document takes time and a lot of copy-pasting.">Rassembler chaque semaine les rapports de plusieurs personnes dans un document unique demande du temps et des copier-coller.</span></p>
+<p><b data-en="What I built">Ce que j’ai créé</b> <span data-en="An Excel file with macros that automatically compiles the weekly reports into one consolidated summary.">Un fichier Excel à macros qui compile automatiquement les rapports hebdomadaires en une synthèse consolidée.</span></p>
+<p class="res"><b data-en="The result">Le résultat</b> <span data-en="A summary ready every week, no copy-pasting and fewer omissions.">Une synthèse prête chaque semaine, sans copier-coller, et moins d’oublis.</span></p><span class="chip">VBA</span><span class="chip">Excel</span></div>
+<div class="card case"><span class="st" data-en="In use">En usage</span><span class="num">05</span>
+<h3 data-en="The working table for the filing management team, generated automatically">Le tableau de travail du service de gestion des déclarations, généré automatiquement</h3>
+<p><b data-en="The problem">Le problème</b> <span data-en="Colleagues in filing management needed a reliable table, and building it by hand each time was slow and error-prone.">Les collègues de la gestion des déclarations avaient besoin d’un tableau fiable, et le construire à la main à chaque fois était long et source d’erreurs.</span></p>
+<p><b data-en="What I built">Ce que j’ai créé</b> <span data-en="An Excel file with macros that automatically generates this table from the source data, in the same format for everyone.">Un fichier Excel à macros qui génère automatiquement ce tableau à partir des données de départ, dans un format identique pour tous.</span></p>
+<p class="res"><b data-en="The result">Le résultat</b> <span data-en="A ready-to-use table, in the same format for the whole team, with no manual rebuilding.">Un tableau prêt à l’emploi, au même format pour toute l’équipe, sans reconstruction manuelle.</span></p><span class="chip">VBA</span><span class="chip">Excel</span></div>
+<div class="card case"><span class="st" data-en="In use">En usage</span><span class="num">06</span>
+<h3 data-en="The starting file set of a desk audit created in one click">Le dossier de départ d’un contrôle sur pièces créé en un clic</h3>
+<p><b data-en="The problem">Le problème</b> <span data-en="Before starting a desk audit, a whole series of files and documents must be prepared by hand, which delays the actual analysis.">Avant de démarrer un contrôle sur pièces, il faut préparer à la main toute une série de fichiers et de documents, ce qui retarde le début du travail d’analyse.</span></p>
+<p><b data-en="What I built">Ce que j’ai créé</b> <span data-en="An Excel file with macros that automatically generates the files and documents needed to launch a desk audit.">Un fichier Excel à macros qui génère automatiquement les fichiers et documents nécessaires pour lancer un contrôle sur pièces.</span></p>
+<p class="res"><b data-en="The result">Le résultat</b> <span data-en="An audit that starts faster, with standardized documents and fewer omissions in the preparation.">Un contrôle qui démarre plus vite, avec des documents standardisés et moins d’oublis dans la préparation.</span></p><span class="chip">VBA</span><span class="chip">Excel</span></div>
+</div>
+<p class="note" data-en="Same kind of task eating your time?">Une tâche de ce genre vous prend aussi du temps ?</p>
+<div class="cta"><a class="btn" href="#contact" data-en="Request a free diagnosis">Demander un diagnostic</a></div>
+<h3 class="sub" data-en="Other projects">Autres projets</h3>
 <div class="grid">
-<div class="card"><span class="st" data-en="Completed">Terminé</span><h3 data-en="Tax cross-check tool">Outil de recoupement fiscal</h3><p data-en="Automation of tax consistency checks with VBA macros and Excel dashboards, reducing processing time.">Automatisation des contrôles de cohérence fiscale avec des macros VBA et des tableaux de bord Excel, pour réduire le temps de traitement.</p><span class="chip">VBA</span><span class="chip">Excel</span></div>
 <div class="card"><span class="st" data-en="Ongoing">En cours</span><h3 data-en="Online bus ticket sales">Vente de tickets de bus en ligne</h3><p data-en="Online sales and booking platform for transport tickets (STORMEYES project) to digitalize access to transport in Africa.">Plateforme de vente et de réservation de tickets de transport (projet STORMEYES) pour digitaliser l’accès au transport en Afrique.</p><span class="chip">.NET</span><span class="chip">C#</span><span class="chip">SQL</span></div>
 <div class="card"><span class="st" data-en="Ongoing">En cours</span><h3>IMMOBTRADER — Dashboard</h3><p data-en="Web application to manage international property listings: admin interface, REST API and relational database.">Application web de gestion d’annonces immobilières internationales : interface d’administration, API REST et base relationnelle.</p><span class="chip">Blazor</span><span class="chip">SQL Server</span></div>
 <div class="card"><span class="st" data-en="Ongoing">En cours</span><h3>Ma Fianu</h3><p data-en="Platform connecting learners and mentors according to their fields of expertise.">Plateforme de mise en relation entre apprenants et mentors selon leurs domaines de compétences.</p><span class="chip">Java</span><span class="chip">SQL</span></div>
@@ -256,7 +372,7 @@ nav a.act{color:var(--gt);box-shadow:inset 0 -2px 0 var(--gold);border-radius:0}
 <div class="contact">
 <div><h2 data-en="Let’s talk about your needs">Parlons de votre besoin</h2><p data-en="Tell me in a few lines what takes too much of your time. I usually reply within 24 hours.">Décrivez-moi en quelques lignes ce qui vous prend trop de temps. Je réponds généralement sous 24 h.</p></div>
 <div class="l">
-<a class="w" href="https://wa.me/22891512021?text=Bonjour%20Pierre%2C%20je%20souhaite%20un%20diagnostic." target="_blank" rel="noopener">WhatsApp · +228 91 51 20 21</a>
+<a class="w" href="https://wa.me/22891512021?text=Bonjour%20Pierre%2C%20je%20souhaite%20un%20diagnostic." target="_blank" rel="noopener">WhatsApp · +228 91 51 20 41</a>
 <a href="mailto:pierredegboevi@gmail.com?subject=Demande%20de%20diagnostic">✉ pierredegboevi@gmail.com</a>
 <a href="https://www.linkedin.com/in/pierre-kossi-degboevi" target="_blank" rel="noopener">LinkedIn</a>
 <a href="#top" data-en="📍 Kara, Togo · available remotely">📍 Kara, Togo · disponible à distance</a>
