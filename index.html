@@ -141,6 +141,12 @@ nav a.act{color:var(--gt);box-shadow:inset 0 -2px 0 var(--gold);border-radius:0}
 .js .rv.in.done{transition:transform .3s,box-shadow .3s,border-color .3s,background .3s;transition-delay:0s}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}.js .rv{opacity:1;transform:none}.head h2:after{width:48px}}
 
+.sites{grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
+.site{padding:0;overflow:hidden;display:block}
+.site img{width:100%;aspect-ratio:8/5;object-fit:cover;display:block;border-bottom:1px solid var(--bd)}
+.site .sb{padding:18px 20px 20px}
+.site .vis{display:block;margin-top:14px;font-size:14px;font-weight:700;color:var(--gt)}
+.site:hover .vis{text-decoration:underline}
 /* ===== Responsive ===== */
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 img{max-width:100%;height:auto}
@@ -262,7 +268,7 @@ h1,h2,h3,p,a,span{overflow-wrap:break-word}
 <div class="wrap stats">
 <div class="card stat"><b data-count="5" data-suf="+">5+</b><span data-en="years of experience">ans d’expérience</span></div>
 <div class="card stat"><b>MBA</b><span>IT Project Management</span></div>
-<div class="card stat"><b data-count="11" data-suf="">11</b><span data-en="projects">réalisations</span></div>
+<div class="card stat"><b data-count="14" data-suf="">14</b><span data-en="projects">réalisations</span></div>
 <div class="card stat"><b>OTR</b><span data-en="tax audit experience">expérience en contrôle fiscal</span></div>
 </div>
 
@@ -336,6 +342,12 @@ h1,h2,h3,p,a,span{overflow-wrap:break-word}
 </div>
 <p class="note" data-en="Same kind of task eating your time?">Une tâche de ce genre vous prend aussi du temps ?</p>
 <div class="cta"><a class="btn" href="#contact" data-en="Request a free diagnosis">Demander un diagnostic</a></div>
+<h3 class="sub" data-en="Websites built for small businesses">Sites web créés pour de petites entreprises</h3>
+<div class="grid sites">
+<a class="card site" href="https://alexcruss.github.io/JONASCLEAN/" target="_blank" rel="noopener"><img src="images/sites/jonasclean.jpg" alt="Capture du site JonasClean" loading="lazy" width="960" height="600"><div class="sb"><h3>JonasClean</h3><p data-en="Showcase website for a premium cleaning company: services, pricing, testimonials and quote request, in French and English.">Site vitrine d’une entreprise de ménage haut de gamme : services, tarifs, témoignages et demande de devis, en français et en anglais.</p><span class="chip">HTML/CSS</span><span class="chip">JavaScript</span><span class="chip">Bilingue</span><span class="vis" data-en="View the site →">Voir le site →</span></div></a>
+<a class="card site" href="https://alexcruss.github.io/BRENDASHOP/" target="_blank" rel="noopener"><img src="images/sites/brendashop.jpg" alt="Capture du site BrendaSTYLE" loading="lazy" width="960" height="600"><div class="sb"><h3>BrendaSTYLE</h3><p data-en="Showcase website and shop in Lomé for wax fabrics, nails and lashes: catalogue, cart and order button.">Site vitrine et boutique à Lomé pour tissus wax, ongles et cils : catalogue, panier et bouton de commande.</p><span class="chip">HTML/CSS</span><span class="chip">JavaScript</span><span class="chip">E-commerce</span><span class="vis" data-en="View the site →">Voir le site →</span></div></a>
+<a class="card site" href="https://alexcruss.github.io/ELIXIRDUTERROIR/" target="_blank" rel="noopener"><img src="images/sites/elixirduterroir.jpg" alt="Capture du site Élixir du Terroir" loading="lazy" width="960" height="600"><div class="sb"><h3>Élixir du Terroir</h3><p data-en="Showcase website for a botanical elixir brand: brand story, products, benefits and customer reviews.">Site vitrine d’une marque d’élixirs botaniques : histoire de la marque, produits, bienfaits et avis clients.</p><span class="chip">HTML/CSS</span><span class="chip">JavaScript</span><span class="chip">Vitrine</span><span class="vis" data-en="View the site →">Voir le site →</span></div></a>
+</div>
 <h3 class="sub" data-en="Other projects">Autres projets</h3>
 <div class="grid">
 <div class="card"><span class="st" data-en="Ongoing">En cours</span><h3 data-en="Online bus ticket sales">Vente de tickets de bus en ligne</h3><p data-en="Online sales and booking platform for transport tickets (STORMEYES project) to digitalize access to transport in Africa.">Plateforme de vente et de réservation de tickets de transport (projet STORMEYES) pour digitaliser l’accès au transport en Afrique.</p><span class="chip">.NET</span><span class="chip">C#</span><span class="chip">SQL</span></div>
@@ -372,7 +384,7 @@ h1,h2,h3,p,a,span{overflow-wrap:break-word}
 <div class="contact">
 <div><h2 data-en="Let’s talk about your needs">Parlons de votre besoin</h2><p data-en="Tell me in a few lines what takes too much of your time. I usually reply within 24 hours.">Décrivez-moi en quelques lignes ce qui vous prend trop de temps. Je réponds généralement sous 24 h.</p></div>
 <div class="l">
-<a class="w" href="https://wa.me/22891512021?text=Bonjour%20Pierre%2C%20je%20souhaite%20un%20diagnostic." target="_blank" rel="noopener">WhatsApp · +228 91 51 20 41</a>
+<a class="w" href="https://wa.me/22891512021?text=Bonjour%20Pierre%2C%20je%20souhaite%20un%20diagnostic." target="_blank" rel="noopener">WhatsApp · +228 91 51 20 21</a>
 <a href="mailto:pierredegboevi@gmail.com?subject=Demande%20de%20diagnostic">✉ pierredegboevi@gmail.com</a>
 <a href="https://www.linkedin.com/in/pierre-kossi-degboevi" target="_blank" rel="noopener">LinkedIn</a>
 <a href="#top" data-en="📍 Kara, Togo · available remotely">📍 Kara, Togo · disponible à distance</a>
@@ -408,7 +420,7 @@ h1,h2,h3,p,a,span{overflow-wrap:break-word}
 (function(){
   var root=document.documentElement;root.classList.add('js');
   var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var sel='.head,.grid>.card,.stats>.card,.about img,.about p,.about .chip,.about .btn,.tl>div,.contact,.note';
+  var sel='.head,.grid>.card,.grid>a.card,.stats>.card,.about img,.about p,.about .chip,.about .btn,.tl>div,.contact,.note';
   var items=document.querySelectorAll(sel),seen=new Map();
   items.forEach(function(el){
     var par=el.parentNode,n=seen.get(par)||0;seen.set(par,n+1);
