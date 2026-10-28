@@ -8,6 +8,7 @@ Site personnel : automatisation Excel/VBA, applications métier .NET/Blazor et a
 
 - Présentation et services
 - Réalisations clients : BrendaSTYLE, JonasClean, Élixir du Terroir
+- Applications métier : CimentStock, ASSIMETO
 - Contact
 
 ## Technique
