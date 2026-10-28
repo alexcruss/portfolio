@@ -10,7 +10,16 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
-<meta property="og:image" content="photo.jpg">
+<link rel="canonical" href="https://alexcruss.github.io/portfolio/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://alexcruss.github.io/portfolio/">
+<meta property="og:title" content="Pierre Kossi DEGBOEVI — Automatisation &amp; applications métier">
+<meta property="og:description" content="Ingénieur informatique au Togo : automatisation Excel/VBA, macros qui font gagner des heures, applications métier .NET/Blazor et accompagnement IT pour les PME.">
+<meta property="og:image" content="https://alexcruss.github.io/portfolio/photo.jpg">
+<meta property="og:image:width" content="800">
+<meta property="og:image:height" content="1000">
+<meta property="og:locale" content="fr_FR">
+<meta name="twitter:card" content="summary">
 <style>
 :root{--bg:#F5EDE3;--w:#FBF7F2;--bd:#E3D5C4;--tx:#2E2430;--mu:#70637A;--p:#6B4E7C;--pd:#44314F;--gold:#C29B52;--gt:#7D5F22;--ser:"Cormorant Garamond",Georgia,"Times New Roman",serif}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -73,20 +82,15 @@ section{padding:64px 0}
 .contact .l a:hover{background:rgba(255,255,255,.08)}
 .contact .l a.w{background:var(--gold);color:#2A1D33;border-color:var(--gold)}
 .contact .l a.w:hover{background:#D3AE66}
+.contact .l .loc{padding:4px 2px 0;font-size:14px;color:#E8D2A0}
 footer{background:#2A1F30;color:#C9BBCB;font-size:13px;padding:24px 0;text-align:center}
-#pick{position:fixed;inset:0;background:rgba(42,31,48,.82);display:none;place-items:center;z-index:50;padding:20px}
-#pick.show{display:grid}
-#pick .box{background:var(--w);border:1px solid var(--gold);border-radius:14px;padding:32px;max-width:380px;width:100%;text-align:center}
-#pick h2{font-family:var(--ser);font-size:24px;color:var(--pd);margin-bottom:4px;line-height:1.2}
-#pick p{color:var(--mu);font-size:14px;margin-bottom:20px}
-#pick button{display:block;width:100%;padding:13px;margin-top:10px;border-radius:8px;border:1.5px solid var(--p);background:transparent;color:var(--pd);font-size:16px;font-weight:700;cursor:pointer}
-#pick button:hover{background:var(--pd);color:var(--gold);border-color:var(--pd)}
 .about{display:grid;grid-template-columns:320px 1fr;gap:40px;align-items:center}
 .about img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:14px;border:1px solid var(--gold);background:var(--bd);display:block;box-shadow:12px 12px 0 var(--bd)}
 .about p{color:var(--mu);font-size:16px;margin-top:14px}
 .about .lead{color:var(--tx);font-size:18px;font-weight:600}
-.about .btn{margin-top:20px;background:var(--pd);color:var(--gold)}
-.about .btn:hover{background:var(--p)}
+.about .btn{margin-top:20px}
+.about .btn,.cta .btn{background:var(--pd);color:var(--gold)}
+.about .btn:hover,.cta .btn:hover{background:var(--p)}
 .aih{margin-top:60px}
 .num{display:block;color:var(--gt);font-family:var(--ser);font-weight:700;font-size:20px;letter-spacing:.06em;margin-bottom:4px}
 .note{margin-top:22px;font-family:var(--ser);font-size:19px;font-style:italic;color:var(--p);text-align:center}
@@ -134,15 +138,18 @@ nav a.act{color:var(--gt);box-shadow:inset 0 -2px 0 var(--gold);border-radius:0}
 .head.in h2:after,html:not(.js) .head h2:after{width:48px}
 .about img{transition:transform .5s,box-shadow .5s}
 .about img:hover{transform:translate(-4px,-4px);box-shadow:16px 16px 0 var(--bd)}
-.js .rv{opacity:0;transform:translateY(30px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0s)}
-.js .tl>div.rv{transform:translateX(-30px)}
-.js .about img.rv{transform:scale(.94) translateY(20px)}
-.js .rv.in{opacity:1;transform:none}
+.js .rv{transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0s)}
+.js .rv:not(.in){opacity:0;transform:translateY(30px)}
+.js .tl>div.rv:not(.in){transform:translateX(-30px)}
+.js .about img.rv:not(.in){transform:scale(.94) translateY(20px)}
 .js .rv.in.done{transition:transform .3s,box-shadow .3s,border-color .3s,background .3s;transition-delay:0s}
-@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}.js .rv{opacity:1;transform:none}.head h2:after{width:48px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}.js .rv:not(.in),.js .tl>div.rv:not(.in),.js .about img.rv:not(.in){opacity:1;transform:none}.head h2:after{width:48px}}
 
 .sites{grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
-.sites.apps{grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr))}
+.sites.apps{grid-template-columns:1fr}
+.apps .site{display:grid;grid-template-columns:1.2fr 1fr}
+.apps .site img{height:100%;aspect-ratio:auto;min-height:260px;border-bottom:0;border-right:1px solid var(--bd)}
+.apps .site .sb{align-self:center;padding:24px 28px}
 .site{padding:0;overflow:hidden;display:block}
 .site img{width:100%;aspect-ratio:8/5;object-fit:cover;display:block;border-bottom:1px solid var(--bd)}
 .site .sb{padding:18px 20px 20px}
@@ -170,9 +177,15 @@ h1,h2,h3,p,a,span{overflow-wrap:break-word}
   .lang{order:2;margin-left:auto}
   nav{order:3;width:100%;flex-wrap:nowrap;overflow-x:auto;gap:4px;padding-bottom:2px;-webkit-overflow-scrolling:touch;scrollbar-width:none;border-top:1px solid var(--bd);padding-top:6px}
   nav::-webkit-scrollbar{display:none}
+  nav{-webkit-mask-image:linear-gradient(90deg,#000 82%,transparent);mask-image:linear-gradient(90deg,#000 82%,transparent)}
+  nav.end{-webkit-mask-image:none;mask-image:none}
   nav a{white-space:nowrap;flex:0 0 auto;padding:9px 12px}
+  nav a.nc,nav a.nc.act{order:-1;position:sticky;left:0;z-index:1;background:var(--pd);color:var(--gold);border-radius:6px;box-shadow:6px 0 0 var(--w)}
   header{position:sticky}
   html{scroll-padding-top:110px}
+  .apps .site{display:block}
+  .apps .site img{height:auto;aspect-ratio:8/5;min-height:0;border-right:0;border-bottom:1px solid var(--bd)}
+  .apps .site .sb{padding:18px 20px 20px}
   .about{grid-template-columns:1fr;gap:26px}
   .about img{max-width:280px;margin:0 auto;box-shadow:8px 8px 0 var(--bd)}
   .about img:hover{box-shadow:8px 8px 0 var(--bd)}
@@ -206,7 +219,6 @@ h1,h2,h3,p,a,span{overflow-wrap:break-word}
   .contact h2{font-size:25px}
   .contact .l a{padding:13px 14px;font-size:14.5px}
   .btn{padding:13px 20px}
-  #pick .box{padding:24px 18px}
 }
 @media(max-width:380px){
   .brand span{font-size:16px;line-height:1.15}
@@ -224,15 +236,6 @@ h1,h2,h3,p,a,span{overflow-wrap:break-word}
 <body>
 <div id="sp"></div>
 
-<div id="pick" role="dialog" aria-modal="true">
-<div class="box">
-<h2>Choisissez votre langue · Choose your language</h2>
-<p>Vous pourrez la changer à tout moment. · You can change it at any time.</p>
-<button data-l="fr">Français</button>
-<button data-l="en">English</button>
-</div>
-</div>
-
 <header><div class="wrap bar">
 <a class="brand" href="#top"><img class="logo" src="logo.png" alt="Logo Pierre Kossi DEGBOEVI" width="44" height="44"><span>Pierre Kossi DEGBOEVI</span></a>
 <div class="right">
@@ -242,7 +245,7 @@ h1,h2,h3,p,a,span{overflow-wrap:break-word}
 <a href="#projets" data-en="Projects">Réalisations</a>
 <a href="#parcours" data-en="Experience">Parcours</a>
 <a href="#competences" data-en="Skills">Compétences</a>
-<a href="#contact">Contact</a>
+<a class="nc" href="#contact">Contact</a>
 </nav>
 <div class="lang"><button data-l="fr">FR</button><button data-l="en">EN</button></div>
 </div>
@@ -258,11 +261,11 @@ h1,h2,h3,p,a,span{overflow-wrap:break-word}
 </div>
 <div class="card search">
 <h2 data-en="What would you like to improve?">Que souhaitez-vous améliorer ?</h2>
-<p data-en="Pick your need and I will get back to you quickly.">Choisissez votre besoin, je vous réponds rapidement.</p>
-<a href="#services"><span data-en="Automate my Excel files">Automatiser mes fichiers Excel</span><b>→</b></a>
-<a href="#services"><span data-en="Track sales, stock and invoices">Suivre mes ventes, stocks et factures</span><b>→</b></a>
-<a href="#services"><span data-en="Build a web application">Créer une application web</span><b>→</b></a>
-<a href="#services"><span data-en="Get support on my IT projects">Être accompagné sur mes projets IT</span><b>→</b></a>
+<p data-en="Pick your need and I will get back to you quickly on WhatsApp.">Choisissez votre besoin, je vous réponds rapidement sur WhatsApp.</p>
+<a href="https://wa.me/22891512041?text=Bonjour%20Pierre%2C%20je%20souhaite%20automatiser%20mes%20fichiers%20Excel." data-href-en="https://wa.me/22891512041?text=Hello%20Pierre%2C%20I%20would%20like%20to%20automate%20my%20Excel%20files." target="_blank" rel="noopener"><span data-en="Automate my Excel files">Automatiser mes fichiers Excel</span><b>→</b></a>
+<a href="https://wa.me/22891512041?text=Bonjour%20Pierre%2C%20je%20souhaite%20suivre%20mes%20ventes%2C%20stocks%20et%20factures." data-href-en="https://wa.me/22891512041?text=Hello%20Pierre%2C%20I%20would%20like%20to%20track%20my%20sales%2C%20stock%20and%20invoices." target="_blank" rel="noopener"><span data-en="Track sales, stock and invoices">Suivre mes ventes, stocks et factures</span><b>→</b></a>
+<a href="https://wa.me/22891512041?text=Bonjour%20Pierre%2C%20je%20souhaite%20cr%C3%A9er%20une%20application%20web." data-href-en="https://wa.me/22891512041?text=Hello%20Pierre%2C%20I%20would%20like%20to%20build%20a%20web%20application." target="_blank" rel="noopener"><span data-en="Build a web application">Créer une application web</span><b>→</b></a>
+<a href="https://wa.me/22891512041?text=Bonjour%20Pierre%2C%20je%20souhaite%20%C3%AAtre%20accompagn%C3%A9%20sur%20mes%20projets%20IT." data-href-en="https://wa.me/22891512041?text=Hello%20Pierre%2C%20I%20would%20like%20support%20on%20my%20IT%20projects." target="_blank" rel="noopener"><span data-en="Get support on my IT projects">Être accompagné sur mes projets IT</span><b>→</b></a>
 </div>
 </div></div>
 
@@ -358,9 +361,7 @@ h1,h2,h3,p,a,span{overflow-wrap:break-word}
 <div class="card"><span class="st" data-en="Ongoing">En cours</span><h3 data-en="Online bus ticket sales">Vente de tickets de bus en ligne</h3><p data-en="Online sales and booking platform for transport tickets (STORMEYES project) to digitalize access to transport in Africa.">Plateforme de vente et de réservation de tickets de transport (projet STORMEYES) pour digitaliser l’accès au transport en Afrique.</p><span class="chip">.NET</span><span class="chip">C#</span><span class="chip">SQL</span></div>
 <div class="card"><span class="st" data-en="Ongoing">En cours</span><h3>IMMOBTRADER — Dashboard</h3><p data-en="Web application to manage international property listings: admin interface, REST API and relational database.">Application web de gestion d’annonces immobilières internationales : interface d’administration, API REST et base relationnelle.</p><span class="chip">Blazor</span><span class="chip">SQL Server</span></div>
 <div class="card"><span class="st" data-en="Ongoing">En cours</span><h3>Ma Fianu</h3><p data-en="Platform connecting learners and mentors according to their fields of expertise.">Plateforme de mise en relation entre apprenants et mentors selon leurs domaines de compétences.</p><span class="chip">Java</span><span class="chip">SQL</span></div>
-<div class="card"><span class="st" data-en="Completed">Terminé</span><h3>Plateforme GED — DSA MBANK</h3><p data-en="Electronic document management and scanning for the banking sector (final-year internship).">Gestion électronique de documents et numérisation pour le secteur bancaire (stage de fin d’études).</p><span class="chip">Java</span><span class="chip">GED</span></div>
-<div class="card"><span class="st" data-en="Online">En ligne</span><h3 data-en="This portfolio">Ce portfolio</h3><p data-en="Static website in HTML, CSS and JavaScript, hosted on GitHub Pages.">Site statique en HTML, CSS et JavaScript, hébergé sur GitHub Pages.</p><span class="chip">HTML/CSS</span><span class="chip">GitHub Pages</span></div>
-</div>
+<div class="card"><span class="st" data-en="Completed">Terminé</span><h3>Plateforme GED — DSA MBANK</h3><p data-en="Electronic document management and scanning for the banking sector (final-year internship).">Gestion électronique de documents et numérisation pour le secteur bancaire (stage de fin d’études).</p><span class="chip">Java</span><span class="chip">GED</span></div></div>
 </div></section>
 
 <section id="parcours" class="alt"><div class="wrap">
@@ -389,10 +390,10 @@ h1,h2,h3,p,a,span{overflow-wrap:break-word}
 <div class="contact">
 <div><h2 data-en="Let’s talk about your needs">Parlons de votre besoin</h2><p data-en="Tell me in a few lines what takes too much of your time. I usually reply within 24 hours.">Décrivez-moi en quelques lignes ce qui vous prend trop de temps. Je réponds généralement sous 24 h.</p></div>
 <div class="l">
-<a class="w" href="https://wa.me/22891512041?text=Bonjour%20Pierre%2C%20je%20souhaite%20un%20diagnostic." target="_blank" rel="noopener">WhatsApp · +228 91 51 20 41</a>
-<a href="mailto:pierredegboevi@gmail.com?subject=Demande%20de%20diagnostic">✉ pierredegboevi@gmail.com</a>
+<a class="w" href="https://wa.me/22891512041?text=Bonjour%20Pierre%2C%20je%20souhaite%20un%20diagnostic." data-href-en="https://wa.me/22891512041?text=Hello%20Pierre%2C%20I%20would%20like%20a%20diagnosis." target="_blank" rel="noopener">WhatsApp · +228 91 51 20 41</a>
+<a href="mailto:pierredegboevi@gmail.com?subject=Demande%20de%20diagnostic" data-href-en="mailto:pierredegboevi@gmail.com?subject=Diagnosis%20request">✉ pierredegboevi@gmail.com</a>
 <a href="https://www.linkedin.com/in/pierre-kossi-degboevi" target="_blank" rel="noopener">LinkedIn</a>
-<a href="#top" data-en="📍 Lomé, Togo · available remotely">📍 Lomé, Togo · disponible à distance</a>
+<span class="loc" data-en="📍 Lomé, Togo · available remotely">📍 Lomé, Togo · disponible à distance</span>
 </div>
 </div>
 </div></section>
@@ -404,20 +405,21 @@ h1,h2,h3,p,a,span{overflow-wrap:break-word}
 (function(){
   var els=document.querySelectorAll('[data-en]');
   els.forEach(function(e){e.setAttribute('data-fr',e.innerHTML)});
+  var hrefs=document.querySelectorAll('[data-href-en]');
+  hrefs.forEach(function(a){a.setAttribute('data-href-fr',a.getAttribute('href'))});
   var titles={fr:'Pierre Kossi DEGBOEVI — Automatisation & applications métier | Togo',en:'Pierre Kossi DEGBOEVI — Automation & business applications | Togo'};
   function setLang(l){
     document.documentElement.lang=l;
     document.title=titles[l];
     els.forEach(function(e){e.innerHTML=e.getAttribute('data-'+l)});
+    hrefs.forEach(function(a){a.setAttribute('href',a.getAttribute('data-href-'+l))});
     document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.dataset.l===l)});
-    try{localStorage.setItem('pkd-lang',l)}catch(x){}
   }
   var saved=null;
   try{saved=localStorage.getItem('pkd-lang')}catch(x){}
-  var pick=document.getElementById('pick');
-  if(saved==='fr'||saved==='en'){setLang(saved)}else{setLang('fr');pick.classList.add('show')}
+  if(saved==='fr'||saved==='en'){setLang(saved)}else{setLang(/^en/i.test(navigator.language||'')?'en':'fr')}
   document.querySelectorAll('[data-l]').forEach(function(b){
-    b.addEventListener('click',function(){setLang(b.dataset.l);pick.classList.remove('show')});
+    b.addEventListener('click',function(){setLang(b.dataset.l);try{localStorage.setItem('pkd-lang',b.dataset.l)}catch(x){}});
   });
 })();
 </script>
@@ -425,6 +427,9 @@ h1,h2,h3,p,a,span{overflow-wrap:break-word}
 (function(){
   var root=document.documentElement;root.classList.add('js');
   var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var nav=document.querySelector('nav');
+  function navEnd(){nav.classList.toggle('end',nav.scrollLeft+nav.clientWidth>=nav.scrollWidth-4)}
+  nav.addEventListener('scroll',navEnd,{passive:true});window.addEventListener('resize',navEnd);navEnd();
   var sel='.head,.grid>.card,.grid>a.card,.stats>.card,.about img,.about p,.about .chip,.about .btn,.tl>div,.contact,.note';
   var items=document.querySelectorAll(sel),seen=new Map();
   items.forEach(function(el){
@@ -450,7 +455,11 @@ h1,h2,h3,p,a,span{overflow-wrap:break-word}
     var links=document.querySelectorAll('nav a[href^="#"]');
     var so=new IntersectionObserver(function(es){
       es.forEach(function(e){
-        if(e.isIntersecting){links.forEach(function(a){a.classList.toggle('act',a.getAttribute('href')==='#'+e.target.id)})}
+        if(!e.isIntersecting)return;
+        links.forEach(function(a){
+          var on=a.getAttribute('href')==='#'+e.target.id;a.classList.toggle('act',on);
+          if(on&&nav.scrollWidth>nav.clientWidth){var r=a.getBoundingClientRect(),n=nav.getBoundingClientRect();nav.scrollTo({left:nav.scrollLeft+r.left-n.left-(n.width-r.width)/2,behavior:reduce?'auto':'smooth'})}
+        });
       });
     },{rootMargin:'-45% 0px -50% 0px'});
     document.querySelectorAll('main section[id]').forEach(function(x){so.observe(x)});
