@@ -45,7 +45,8 @@ h1{font-family:var(--ser);font-size:clamp(34px,5vw,54px);line-height:1.08;margin
 .hero p{font-size:17px;opacity:.9;margin-bottom:26px;max-width:540px}
 .btn{display:inline-block;padding:12px 24px;border-radius:8px;font-weight:700;font-size:15px;border:1.5px solid transparent}
 .b1{background:var(--gold);color:#2A1D33}.b1:hover{background:#D3AE66}
-.b2{border-color:rgba(232,210,160,.6);color:#F3E6C8;margin-left:8px}.b2:hover{background:rgba(255,255,255,.08)}
+.b2{border-color:rgba(232,210,160,.6);color:#F3E6C8}.b2:hover{background:rgba(255,255,255,.08)}
+.acts{display:flex;flex-wrap:wrap;gap:10px}
 .card{background:var(--w);border:1px solid var(--bd);border-radius:12px;padding:22px}
 .search{color:var(--tx);border-color:var(--gold)}
 .search h2{font-family:var(--ser);font-size:22px;color:var(--pd);margin-bottom:4px}
@@ -103,7 +104,7 @@ footer{background:#2A1F30;color:#C9BBCB;font-size:13px;padding:24px 0;text-align
 .cta{text-align:center;margin-top:12px}
 #projets>.wrap>.lead{margin-bottom:22px;color:var(--mu)}
 .sub{font-family:var(--ser);font-size:26px;color:var(--pd);margin:44px 0 16px}
-@media(max-width:800px){.about{grid-template-columns:1fr}.about img{max-width:280px}.hero .wrap,.contact{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.b2{margin:10px 0 0}.bar{flex-direction:column;align-items:flex-start}}
+@media(max-width:800px){.about{grid-template-columns:1fr}.about img{max-width:280px}.hero .wrap,.contact{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.bar{flex-direction:column;align-items:flex-start}}
 
 /* ===== Animations ===== */
 #sp{position:fixed;top:0;left:0;right:0;height:3px;background:var(--gold);transform:scaleX(0);transform-origin:0 0;z-index:60}
@@ -167,10 +168,7 @@ h1,h2,h3,p,a,span{overflow-wrap:break-word}
   .hero .wrap{gap:24px}
   nav a{padding:8px 8px;font-size:13.5px}
 }
-@media(max-width:800px){
-  section{padding:48px 0}
-  .hero{padding:44px 0 72px}
-  .hero p{max-width:none}
+@media(max-width:940px){
   .bar{flex-direction:row;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:10px 0}
   .right{display:contents}
   .brand{order:1;min-width:0;font-size:18px}
@@ -181,8 +179,12 @@ h1,h2,h3,p,a,span{overflow-wrap:break-word}
   nav.end{-webkit-mask-image:none;mask-image:none}
   nav a{white-space:nowrap;flex:0 0 auto;padding:9px 12px}
   nav a.nc,nav a.nc.act{order:-1;position:sticky;left:0;z-index:1;background:var(--pd);color:var(--gold);border-radius:6px;box-shadow:6px 0 0 var(--w)}
-  header{position:sticky}
   html{scroll-padding-top:110px}
+}
+@media(max-width:800px){
+  section{padding:48px 0}
+  .hero{padding:44px 0 72px}
+  .hero p{max-width:none}
   .apps .site{display:block}
   .apps .site img{height:auto;aspect-ratio:8/5;min-height:0;border-right:0;border-bottom:1px solid var(--bd)}
   .apps .site .sb{padding:18px 20px 20px}
@@ -198,8 +200,7 @@ h1,h2,h3,p,a,span{overflow-wrap:break-word}
   .wrap{padding:0 16px}
   section{padding:40px 0}
   .hero{padding:34px 0 64px}
-  .hero .btn{display:block;width:100%;text-align:center;margin:0 0 10px}
-  .hero .b2{margin-left:0}
+  .hero .btn{width:100%;text-align:center}
   .stats{grid-template-columns:repeat(2,1fr);gap:10px;margin-top:-36px}
   .stat{padding:14px 8px}
   .stat b{font-size:26px}
@@ -257,7 +258,7 @@ h1,h2,h3,p,a,span{overflow-wrap:break-word}
 <span class="tag" data-en="Available for new projects">Disponible pour de nouveaux projets</span>
 <h1 data-en="Custom tools to help your business save time.">Des outils sur mesure pour que votre entreprise gagne du temps.</h1>
 <p data-en="IT engineer based in Togo. I automate repetitive tasks (Excel, VBA) and build simple, reliable business applications for small and medium businesses.">Ingénieur informatique basé au Togo, j’automatise les tâches répétitives (Excel, VBA) et je conçois des applications métier simples et fiables pour les PME.</p>
-<a class="btn b1" href="#contact" data-en="Request a diagnosis">Demander un diagnostic</a><a class="btn b2" href="#projets" data-en="See my work">Voir mes réalisations</a>
+<div class="acts"><a class="btn b1" href="#contact" data-en="Request a free diagnosis">Demander un diagnostic gratuit</a><a class="btn b2" href="#projets" data-en="See my work">Voir mes réalisations</a></div>
 </div>
 <div class="card search">
 <h2 data-en="What would you like to improve?">Que souhaitez-vous améliorer ?</h2>
@@ -302,7 +303,7 @@ h1,h2,h3,p,a,span{overflow-wrap:break-word}
 <section id="services" class="alt"><div class="wrap">
 <div class="head"><small>Services</small><h2 data-en="What I can do for you">Ce que je peux faire pour vous</h2></div>
 <div class="grid">
-<div class="card svc"><h3 data-en="Excel diagnosis">Diagnostic Excel</h3><p data-en="A short conversation to spot what can be automated in the way you work.">Un court échange pour repérer ce qui peut être automatisé dans votre façon de travailler.</p><em data-en="Starting point">Point de départ</em></div>
+<div class="card svc"><h3 data-en="Excel diagnosis">Diagnostic Excel</h3><p data-en="A short conversation to spot what can be automated in the way you work.">Un court échange pour repérer ce qui peut être automatisé dans votre façon de travailler.</p><em data-en="Free">Gratuit</em></div>
 <div class="card svc"><h3 data-en="Custom automation">Automatisation sur mesure</h3><p data-en="VBA macros, dashboards, invoice and report templates. Less typing, fewer errors.">Macros VBA, tableaux de bord, modèles de factures et de rapports. Moins de saisie, moins d’erreurs.</p><em data-en="Fixed price, quoted upfront">Forfait annoncé à l’avance</em></div>
 <div class="card svc"><h3 data-en="Business application">Application métier</h3><p data-en=".NET/Blazor web application when Excel is no longer enough: management, tracking, booking, dashboards.">Application web .NET/Blazor quand Excel ne suffit plus : gestion, suivi, réservation, tableaux de bord.</p><em data-en="On quote">Sur devis</em></div>
 <div class="card svc"><h3 data-en="Maintenance and support">Maintenance et support</h3><p data-en="Fixes, updates and assistance so your tools stay reliable over time.">Corrections, évolutions et assistance pour que vos outils restent fiables dans la durée.</p><em data-en="Monthly subscription">Abonnement mensuel</em></div>
@@ -345,7 +346,7 @@ h1,h2,h3,p,a,span{overflow-wrap:break-word}
 <p class="res"><b data-en="The result">Le résultat</b> <span data-en="An audit that starts faster, with standardized documents and fewer omissions in the preparation.">Un contrôle qui démarre plus vite, avec des documents standardisés et moins d’oublis dans la préparation.</span></p><span class="chip">VBA</span><span class="chip">Excel</span></div>
 </div>
 <p class="note" data-en="Same kind of task eating your time?">Une tâche de ce genre vous prend aussi du temps ?</p>
-<div class="cta"><a class="btn" href="#contact" data-en="Request a free diagnosis">Demander un diagnostic</a></div>
+<div class="cta"><a class="btn" href="#contact" data-en="Request a free diagnosis">Demander un diagnostic gratuit</a></div>
 <h3 class="sub" data-en="Websites built for small businesses">Sites web créés pour de petites entreprises</h3>
 <div class="grid sites">
 <a class="card site" href="https://alexcruss.github.io/JONASCLEAN/" target="_blank" rel="noopener"><img src="jonasclean.jpg" alt="Capture du site JonasClean" loading="lazy" width="960" height="600"><div class="sb"><h3>JonasClean</h3><p data-en="Showcase website for a premium cleaning company: services, pricing, testimonials and quote request, in French and English.">Site vitrine d’une entreprise de ménage haut de gamme : services, tarifs, témoignages et demande de devis, en français et en anglais.</p><span class="chip">HTML/CSS</span><span class="chip">JavaScript</span><span class="chip">Bilingue</span><span class="vis" data-en="View the site →">Voir le site →</span></div></a>
