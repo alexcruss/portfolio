@@ -24,6 +24,10 @@
 :root{--bg:#F5EDE3;--w:#FBF7F2;--bd:#E3D5C4;--tx:#2E2430;--mu:#70637A;--p:#6B4E7C;--pd:#44314F;--gold:#C29B52;--gt:#7D5F22;--ser:"Cormorant Garamond",Georgia,"Times New Roman",serif}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
+:focus-visible{outline:3px solid var(--p);outline-offset:3px;border-radius:4px}
+.hero :focus-visible,.contact :focus-visible{outline-color:#F3E6C8}
+.skip{position:absolute;left:12px;top:-60px;z-index:70;background:var(--pd);color:var(--gold);padding:12px 18px;border-radius:8px;font-weight:700;transition:top .2s}
+.skip:focus{top:12px}
 body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--tx);line-height:1.6}
 a{color:inherit;text-decoration:none}
 .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
@@ -33,10 +37,10 @@ header{background:var(--w);border-bottom:1px solid var(--gold);position:sticky;t
 .logo{width:44px;height:44px;border-radius:50%;background:#fff;border:1.5px solid var(--gold);display:block;object-fit:cover}
 .right{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 nav{display:flex;gap:2px;flex-wrap:wrap}
-nav a{padding:8px 10px;border-radius:6px;font-size:14px;font-weight:600;color:var(--mu)}
+nav a{display:inline-flex;align-items:center;min-height:44px;padding:0 10px;border-radius:6px;font-size:14px;font-weight:600;color:var(--mu)}
 nav a:hover{color:var(--gt)}
 .lang{display:flex;border:1px solid var(--bd);border-radius:6px;overflow:hidden}
-.lang button{border:0;background:var(--w);padding:6px 10px;font-size:13px;font-weight:700;color:var(--mu);cursor:pointer}
+.lang button{border:0;background:var(--w);min-width:44px;min-height:44px;padding:6px 10px;font-size:13px;font-weight:700;color:var(--mu);cursor:pointer}
 .lang button.on{background:var(--pd);color:var(--gold)}
 .hero{background:linear-gradient(135deg,#5B4369 0%,#3F2D4A 100%);color:#fff;padding:64px 0 84px}
 .hero .wrap{display:grid;grid-template-columns:1.3fr 1fr;gap:32px;align-items:center}
@@ -178,9 +182,9 @@ h1,h2,h3,p,a,span{overflow-wrap:break-word}
   nav::-webkit-scrollbar{display:none}
   nav{-webkit-mask-image:linear-gradient(90deg,#000 82%,transparent);mask-image:linear-gradient(90deg,#000 82%,transparent)}
   nav.end{-webkit-mask-image:none;mask-image:none}
-  nav a{white-space:nowrap;flex:0 0 auto;padding:9px 12px}
-  nav a.nc,nav a.nc.act{order:-1;position:sticky;left:0;z-index:1;background:var(--pd);color:var(--gold);border-radius:6px;box-shadow:6px 0 0 var(--w)}
-  html{scroll-padding-top:110px}
+  nav a{white-space:nowrap;flex:0 0 auto;padding:0 12px}
+  nav a.nc,nav a.nc.act{order:-1;background:var(--pd);color:var(--gold);border-radius:6px}
+  html{scroll-padding-top:125px}
 }
 @media(max-width:800px){
   section{padding:48px 0}
@@ -235,13 +239,14 @@ h1,h2,h3,p,a,span{overflow-wrap:break-word}
 }
 </style>
 </head>
-<body>
+<body id="top">
+<a class="skip" href="#main" data-en="Skip to content">Aller au contenu</a>
 <div id="sp"></div>
 
 <header><div class="wrap bar">
 <a class="brand" href="#top"><img class="logo" src="logo.png" alt="Logo Pierre Kossi DEGBOEVI" width="44" height="44"><span>Pierre Kossi DEGBOEVI</span></a>
 <div class="right">
-<nav>
+<nav aria-label="Navigation principale" data-en-label="Main navigation">
 <a href="#apropos" data-en="About">À propos</a>
 <a href="#services" data-en="Services">Services</a>
 <a href="#projets" data-en="Projects">Réalisations</a>
@@ -249,11 +254,11 @@ h1,h2,h3,p,a,span{overflow-wrap:break-word}
 <a href="#competences" data-en="Skills">Compétences</a>
 <a class="nc" href="#contact">Contact</a>
 </nav>
-<div class="lang"><button data-l="fr">FR</button><button data-l="en">EN</button></div>
+<div class="lang" role="group" aria-label="Langue" data-en-label="Language"><button type="button" data-l="fr" lang="fr" aria-label="Français" aria-pressed="false">FR</button><button type="button" data-l="en" lang="en" aria-label="English" aria-pressed="false">EN</button></div>
 </div>
 </div></header>
 
-<main id="top">
+<main id="main" tabindex="-1">
 <div class="hero"><div class="wrap">
 <div>
 <span class="tag" data-en="Available for new projects">Disponible pour de nouveaux projets</span>
@@ -355,7 +360,7 @@ h1,h2,h3,p,a,span{overflow-wrap:break-word}
 <a class="card site" href="https://alexcruss.github.io/BRENDASHOP/" target="_blank" rel="noopener"><img src="brendashop.jpg" alt="Capture du site BrendaSTYLE" loading="lazy" width="960" height="600"><div class="sb"><h3>BrendaSTYLE</h3><p data-en="Showcase website and shop in Lomé for wax fabrics, nails and lashes: catalogue, cart and order button.">Site vitrine et boutique à Lomé pour tissus wax, ongles et cils : catalogue, panier et bouton de commande.</p><span class="chip">HTML/CSS</span><span class="chip">JavaScript</span><span class="chip">E-commerce</span><span class="vis" data-en="View the site →">Voir le site →</span></div></a></div>
 <h3 class="sub" data-en="Business applications">Applications métier</h3>
 <div class="grid sites apps">
-<div class="card site"><img src="cimentstock.jpg" alt="Tableau de bord de CimentStock : ventes du jour, crédits clients, stock et dernières ventes" loading="lazy" width="960" height="600"><div class="sb"><span class="st">FATALITY 2KP</span><h3>CimentStock</h3><p data-en="The first software published by FATALITY 2KP, my company. Purchase, sales and stock management for cement businesses: cash or credit sales, PDF invoices, weighted average cost, multiple warehouses and daily backups. Runs locally, with no internet needed.">Premier logiciel édité par FATALITY 2KP, ma société. Gestion des achats, ventes et stock pour les commerces de ciment : ventes comptant ou à crédit, factures PDF, coût moyen pondéré, plusieurs dépôts et sauvegarde quotidienne. Fonctionne en local, sans internet.</p><span class="chip">Blazor</span><span class="chip">.NET</span><span class="chip">SQLite</span><span class="chip" data-en="Business app">Application métier</span></div></div>
+<div class="card site"><img src="cimentstock.jpg" alt="Tableau de bord de CimentStock : ventes du jour, crédits clients, stock et dernières ventes" loading="lazy" width="960" height="600"><div class="sb"><span class="st">FATALITY 2KP</span><h3>CimentStock</h3><p data-en="The first software published by FATALITY 2KP, my company. Purchase, sales and stock management for cement businesses: cash or credit sales, PDF invoices, weighted average cost, multiple warehouses and daily backups. Runs locally, with no internet needed.">Premier logiciel édité par FATALITY 2KP, ma société. Gestion des achats, ventes et stock pour les commerces de ciment : ventes comptant ou à crédit, factures PDF, coût moyen pondéré, plusieurs dépôts et sauvegarde quotidienne. Fonctionne en local, sans internet.</p><span class="chip">Blazor</span><span class="chip">.NET</span><span class="chip">SQLite</span><span class="chip" data-en="Business app">Application métier</span><a class="vis" href="https://wa.me/22891512041?text=Bonjour%20Pierre%2C%20je%20souhaite%20une%20d%C3%A9monstration%20de%20CimentStock." data-href-en="https://wa.me/22891512041?text=Hello%20Pierre%2C%20I%20would%20like%20a%20demo%20of%20CimentStock." target="_blank" rel="noopener" data-en="Request a demo on WhatsApp →">Demander une démo sur WhatsApp →</a></div></div>
 <a class="card site" href="https://assimeto.pages.dev/" target="_blank" rel="noopener"><img src="assimeto.jpg" alt="Trois écrans d’ASSIMETO : liste de courses, plats réalisables et fiche recette" loading="lazy" width="960" height="600"><div class="sb"><span class="st">FATALITY 2KP</span><h3>ASSIMETO</h3><p data-en="Installable mobile app (PWA) built at FATALITY 2KP, first for my family’s grocery shopping in Lomé: shopping list by market, supermarket and corner shop with FCFA totals, fridge and pantry stock, Togolese dishes you can cook with what is at home, and storage tips. Works offline, syncs across several phones and suggests dishes with AI.">Appli mobile installable (PWA) développée chez FATALITY 2KP, d’abord pour les courses de ma famille à Lomé : liste par marché, supermarché et boutique avec total en FCFA, stock du frigo et de la réserve, plats togolais réalisables avec ce qu’il y a à la maison et conseils de conservation. Fonctionne sans internet, se partage entre plusieurs téléphones et propose des idées de plats par IA.</p><span class="chip">PWA</span><span class="chip">JavaScript</span><span class="chip">Firebase</span><span class="chip" data-en="AI (Claude)">IA (Claude)</span><span class="chip" data-en="Offline">Hors ligne</span><span class="vis" data-en="View the app →">Voir l’appli →</span></div></a>
 </div>
 <h3 class="sub" data-en="Other projects">Autres projets</h3>
@@ -417,7 +422,8 @@ h1,h2,h3,p,a,span{overflow-wrap:break-word}
     document.title=titles[l];
     els.forEach(function(e){e.innerHTML=e.getAttribute('data-'+l)});
     hrefs.forEach(function(a){a.setAttribute('href',a.getAttribute('data-href-'+l))});
-    document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.dataset.l===l)});
+    document.querySelectorAll('.lang button').forEach(function(b){var on=b.dataset.l===l;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on)});
+    document.querySelectorAll('[data-en-label]').forEach(function(e){if(!e.dataset.frLabel)e.dataset.frLabel=e.getAttribute('aria-label');e.setAttribute('aria-label',l==='en'?e.dataset.enLabel:e.dataset.frLabel)});
   }
   var saved=null;
   try{saved=localStorage.getItem('pkd-lang')}catch(x){}
