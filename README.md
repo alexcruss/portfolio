@@ -2,7 +2,7 @@
 
 Site personnel : automatisation Excel/VBA, applications métier .NET/Blazor et accompagnement IT pour les PME au Togo.
 
-**En ligne : [alexcruss.github.io/portfolio](https://alexcruss.github.io/portfolio/)**
+**En ligne : [pierredegboevi.com](https://pierredegboevi.com/)**
 
 ## Contenu
 
