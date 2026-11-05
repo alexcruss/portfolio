@@ -14,3 +14,13 @@ Site personnel : automatisation Excel/VBA, applications métier .NET/Blazor et a
 ## Technique
 
 Site statique en HTML, CSS et JavaScript, sans framework, hébergé sur GitHub Pages.
+
+## Version anglaise
+
+`index.html` est la source (français + textes anglais dans les attributs `data-en`). La page `en/index.html` est générée : après toute modification, lancer
+
+```
+python _build/build-en.py
+```
+
+`python _build/make-og.py` régénère l'image de partage `og-image.jpg` (1200×630).
