@@ -88,6 +88,7 @@ ALTS={
 'Capture du site JonasClean':'Screenshot of the JonasClean website',
 'Tableau de bord de CimentStock : ventes du jour, crédits clients, stock et dernières ventes':'CimentStock dashboard: daily sales, customer credit, stock and latest sales',
 'Trois écrans d’ASSIMETO : liste de courses, plats réalisables et fiche recette':'Three ASSIMETO screens: shopping list, dishes you can cook and recipe card',
+'Affiche du guide « Garde la flamme, même à distance » : guide PDF pour hommes, 5 leçons et 2 bonus, couverture du guide et mention Disponible sur Chariow':'Poster for the guide “Garde la flamme, même à distance”: PDF guide for men, 5 lessons and 2 bonuses, the guide cover and the mention Available on Chariow',
 'Logo Pierre Kossi DEGBOEVI':'Pierre Kossi DEGBOEVI logo',
 }
 for fr,en in ALTS.items():
