@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-d1BR3u0uvO+5wYr4xXxXbZK9BU4jcR/rA5yfYjZM8NI=' 'unsafe-hashes' 'sha256-MhtPZXr7+LpJUY5qtMutB+qWfQtMaPccfe7QXtCcEYc='; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-2blD+4IluhRPBYkjpEugecj+5cSB2pGddKlIG0yitAg=' 'unsafe-hashes' 'sha256-MhtPZXr7+LpJUY5qtMutB+qWfQtMaPccfe7QXtCcEYc='; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://bot.pierredegboevi.com; connect-src https://bot.pierredegboevi.com; base-uri 'none'; form-action 'none'; object-src 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Pierre Kossi DEGBOEVI — Automatisation & applications métier | Togo</title>
@@ -241,6 +241,13 @@ footer a.legal{display:inline-flex;align-items:center;min-height:44px;color:inhe
 .site .sb{padding:18px 20px 20px}
 .site .vis{display:block;margin-top:14px;font-size:0.875rem;font-weight:700;color:var(--gt)}
 .site:hover .vis{text-decoration:underline}
+.live[hidden],.sub[hidden]{display:none}
+.live .site .cv{width:100%;height:auto;aspect-ratio:8/5;object-fit:cover;display:block;border-bottom:1px solid var(--bd);background:var(--bg)}
+.live .sb p{white-space:pre-line}
+.live .th{display:flex;gap:6px;flex-wrap:wrap;margin-top:14px}
+.live .th button{padding:0;width:52px;height:52px;border:2px solid var(--bd);border-radius:8px;overflow:hidden;background:var(--bg);cursor:pointer}
+.live .th button[aria-pressed="true"]{border-color:var(--gold)}
+.live .th img{width:100%;height:100%;aspect-ratio:auto;object-fit:cover;border:0;display:block;transform:none}
 a.vis{padding:10px 0;margin-top:4px}
 .brand{min-height:44px}
 /* ===== Responsive ===== */
@@ -467,6 +474,8 @@ h1,h2,h3,p,a,span{overflow-wrap:break-word}
 <div class="card"><span class="st" data-en="Ongoing">En cours</span><h3>IMMOBTRADER — Dashboard</h3><p data-en="Web application to manage international property listings: admin interface, REST API and relational database.">Application web de gestion d’annonces immobilières internationales : interface d’administration, API REST et base relationnelle.</p><span class="chip">Blazor</span><span class="chip">SQL Server</span></div>
 <div class="card"><span class="st" data-en="Ongoing">En cours</span><h3>Ma Fianu</h3><p data-en="Platform connecting learners and mentors according to their fields of expertise.">Plateforme de mise en relation entre apprenants et mentors selon leurs domaines de compétences.</p><span class="chip">Java</span><span class="chip">SQL</span></div>
 <div class="card"><span class="st" data-en="Completed">Terminé</span><h3>Plateforme GED — DSA MBANK</h3><p data-en="Electronic document management and scanning for the banking sector (final-year internship).">Gestion électronique de documents et numérisation pour le secteur bancaire (stage de fin d’études).</p><span class="chip">Java</span><span class="chip">GED</span></div></div>
+<h3 class="sub" id="live-title" hidden data-en="Latest projects added">Derniers projets ajoutés</h3>
+<div class="grid sites live" id="live" hidden></div>
 </div></section>
 
 <section id="parcours" class="alt"><div class="wrap">
@@ -557,6 +566,35 @@ h1,h2,h3,p,a,span{overflow-wrap:break-word}
     hd.classList.toggle('sc',y>10);
   }
   window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+  var API='https://bot.pierredegboevi.com',live=document.getElementById('live'),en=root.lang==='en';
+  function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
+  function card(p){
+    var imgs=(p.images||[]).filter(function(i){return /^[a-f0-9]{24}$/.test(i)}).map(function(i){return API+'/img/'+i});
+    var c=el('div','card site'),cv=null,sb=el('div','sb');
+    if(imgs.length){cv=el('img','cv');cv.src=imgs[0];cv.alt=(en?'Image of the project ':'Image du projet ')+p.title;cv.loading='lazy';cv.width=960;cv.height=600;c.appendChild(cv)}
+    sb.appendChild(el('span','st',en?p.category_en:p.category_fr));
+    sb.appendChild(el('h3',null,p.title));
+    if(p.description)sb.appendChild(el('p',null,p.description));
+    if(p.date)sb.appendChild(el('span','chip',new Date(p.date*1000).toLocaleDateString(en?'en-GB':'fr-FR',{month:'long',year:'numeric'})));
+    if(imgs.length>1){
+      var th=el('div','th');
+      imgs.forEach(function(u,k){
+        var b=el('button'),im=el('img');b.type='button';b.setAttribute('aria-label',(en?'View image ':'Voir l’image ')+(k+1));b.setAttribute('aria-pressed',k?'false':'true');
+        im.src=u;im.alt='';im.loading='lazy';b.appendChild(im);
+        b.onclick=function(){cv.src=u;[].forEach.call(th.children,function(x){x.setAttribute('aria-pressed',x===b?'true':'false')})};
+        th.appendChild(b);
+      });
+      sb.appendChild(th);
+    }
+    c.appendChild(sb);return c;
+  }
+  if(live&&window.fetch){
+    fetch(API+'/api/projects',{credentials:'omit'}).then(function(r){return r.ok?r.json():[]}).then(function(list){
+      if(!Array.isArray(list)||!list.length)return;
+      list.forEach(function(p){live.appendChild(card(p))});
+      live.hidden=false;document.getElementById('live-title').hidden=false;
+    }).catch(function(){});
+  }
 })();
 </script>
 </body>
